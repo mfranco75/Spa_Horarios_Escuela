@@ -27,7 +27,7 @@ const Calendario = () => {
   const generateColor = (name) => {
     let hash = 0;
     for (let i=0; i < name.length; i++) {
-      hash = name.charCodeAt(i) + ((hash << 25) - hash );
+      hash = name.charCodeAt(i) + ((hash << 4) - hash );
     }
     const color = `hsl(${hash % 360}, 60%, 45%)`;
     return color

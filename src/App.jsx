@@ -1,35 +1,28 @@
-import { useState } from 'react'
-
-import { ClaseDos } from './ejemplos_del_curso/ClaseDos.jsx'
-import { ComponenteUno } from './ejemplos_del_curso/ComponenteUno.jsx'
-import ClaseCuatro from './ejemplos_del_curso/ClaseCuatro.jsx'
-import Text from './ejemplos_del_curso/Text.jsx'
-import HorariosContainer from './ejemplos_del_curso/HorariosContainer.jsx'
-import FullCalendarContainer from './ejemplos_del_curso/fullCalendarContainer.jsx'
-import Calendario from './ejemplos_del_curso/Calendario.jsx'
-
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Login from "./components/pages/Login";
+import Docentes from "./components/pages/Docentes";
+import Alumnos from "./components/pages/Alumnos";
+import Informes from "./components/pages/Informes";
+import './styles/App.css';
 
 
 function App() {
-   
   return (
-    <div className='App'>
-      <h1>Curso React con Vite</h1>
-      <div>
-        <h1>PADRE</h1>
-        <hr/>
-          <Calendario/>       
+    <Router>
+      <div className="App">
+        <Navbar />
+        <main>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/docentes" element={<Docentes />} />
+            <Route path="/alumnos" element={<Alumnos />} />
+            <Route path="/informes" element={<Informes />} />
+          </Routes>
+        </main>
       </div>
-      
-    </div>
-  )
+    </Router>
+  );
 }
 
-export default App
-
-/* <ComponenteUno/>
-          <ClaseDos nombre="Mariano" edad= "49" nacionalidad= "Argentino"/>
-          <ClaseCuatro/>
-          <Text/>
-          <HorariosContainer/>
-*/
+export default App;
