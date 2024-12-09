@@ -8,6 +8,7 @@ function Navbar() {
       <div className="navbar-brand">Gestión de Escuela</div>
       <ul className="navbar-menu">
         <li><Link to="/">Login</Link></li>
+        <li><Link to="/horarios">Horarios</Link></li>
         <li><Link to="/docentes">Docentes</Link></li>
         <li><Link to="/alumnos">Alumnos</Link></li>
         <li><Link to="/informes">Informes</Link></li>

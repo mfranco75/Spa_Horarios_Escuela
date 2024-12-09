@@ -5,7 +5,7 @@ import timeGridPlugin from "@fullcalendar/timegrid"; // Vista de cuadrícula hor
 import listPlugin from '@fullcalendar/list'; // Importar el plugin de lista
 import interactionPlugin from "@fullcalendar/interaction"; // Interacciones como drag & drop
 import esLocale from '@fullcalendar/core/locales/es'; // Importa el idioma español
-import pedirHorarios from "./pedirHorarios";
+import pedirHorarios from "../functions/pedirHorarios";
 import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css'; // Estilos para tooltips
 import generarEventosCalendar from "./generarEventosCalendar";
@@ -14,7 +14,7 @@ const Calendario = () => {
   const [eventos, setEventos] = useState([]);
 
   useEffect(() => {
-    pedirHorarios()
+    pedirHorarios("70")
       .then((res) => {
         const eventosGenerados = generarEventosCalendar(res);
         setEventos(eventosGenerados); // Guardamos los eventos en el estado

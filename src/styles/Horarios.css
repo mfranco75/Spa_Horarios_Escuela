@@ -1,0 +1,46 @@
+.horarios-container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .sidebar {
+    width: 25%;
+    background-color: #f4f4f9;
+    border-right: 1px solid #ddd;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  
+  .sidebar h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+  
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sidebar li {
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .sidebar li:hover {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .sidebar li.active {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .calendar-container {
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+  }
+  
