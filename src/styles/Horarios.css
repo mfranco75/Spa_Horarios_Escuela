@@ -5,6 +5,7 @@
   
   .sidebar {
     width: 25%;
+    color: black;
     background-color: #f4f4f9;
     border-right: 1px solid #ddd;
     padding: 20px;
@@ -12,29 +13,32 @@
   }
   
   .sidebar h2 {
+    color: rgb(36, 24, 65);
     font-size: 1.5em;
     margin-bottom: 10px;
   }
   
   .sidebar ul {
+    color: black;
     list-style: none;
     padding: 0;
   }
   
   .sidebar li {
+    color: black;
     padding: 10px;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
   
   .sidebar li:hover {
-    background-color: #4CAF50;
+    background-color: #120e3d;
     color: white;
   }
   
   .sidebar li.active {
-    background-color: #4CAF50;
-    color: white;
+    background-color: #9195ca;
+    color: black;
     font-weight: bold;
   }
   

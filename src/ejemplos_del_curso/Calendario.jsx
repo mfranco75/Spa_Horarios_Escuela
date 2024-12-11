@@ -10,11 +10,12 @@ import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css'; // Estilos para tooltips
 import generarEventosCalendar from "./generarEventosCalendar";
 
-const Calendario = () => {
+const Calendario = ({ id }) => {
   const [eventos, setEventos] = useState([]);
 
   useEffect(() => {
-    pedirHorarios("70")
+    if (!id) return; // No hacemos nada si no hay un id
+    pedirHorarios(id)
       .then((res) => {
         const eventosGenerados = generarEventosCalendar(res);
         setEventos(eventosGenerados); // Guardamos los eventos en el estado
@@ -22,7 +23,7 @@ const Calendario = () => {
       .catch((err) => {
         console.error("Error al cargar los horarios:", err);
       });
-  }, []);
+  }, [id]);
 
   const generateColor = (name) => {
     let hash = 0;

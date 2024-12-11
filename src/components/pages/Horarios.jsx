@@ -12,8 +12,6 @@ function Horarios({ CalendarComponent }) {
         const response = await fetch(import.meta.env.VITE_ENDPOINT_PROFESORES);
         const data = await response.json();
         setDocentes(data);
-        console.log(data)
-        console.log(import.meta.env.VITE_ENDPOINT_PROFESORES)
       } catch (error) {
         console.error("Error fetching docentes:", error);
       }
@@ -38,7 +36,7 @@ function Horarios({ CalendarComponent }) {
               className={docente.id === selectedDocenteId ? "active" : ""}
               onClick={() => handleDocenteClick(docente.id)}
             >
-              {docente.nombre}
+              {docente.apellido_nombre}
             </li>
           ))}
         </ul>
