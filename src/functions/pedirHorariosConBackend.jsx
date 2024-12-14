@@ -1,3 +1,5 @@
+// esta funcion es para trabajar con el backend en NODEJS con Postgres
+
 const pedirHorarios = async (profesorId) => {
     try {
         //const response = await fetch(import.meta.VITE_ENDPOINT_HORARIOS_PROFESOR , {

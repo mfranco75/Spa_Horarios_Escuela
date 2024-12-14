@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Calendario from "../ejemplos_del_curso/Calendario";
+import Calendario from "./Calendario";
 import pedirHorarios from "../functions/pedirHorarios";
 
 

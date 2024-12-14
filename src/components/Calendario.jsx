@@ -10,6 +10,10 @@ import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css'; // Estilos para tooltips
 import generarEventosCalendar from "./generarEventosCalendar";
 
+
+
+
+
 const Calendario = ({ id }) => {
   const [eventos, setEventos] = useState([]);
 
