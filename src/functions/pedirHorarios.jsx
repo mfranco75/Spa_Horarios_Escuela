@@ -1,51 +1,42 @@
+import supabase from "../conexionDatabase";
+
 const pedirHorarios = async (profesorId) => {
     try {
-        //const response = await fetch(import.meta.VITE_ENDPOINT_HORARIOS_PROFESOR , {
-          const response = await fetch("http://localhost:3000/api/v1/horarios/buscap/", {
-            method: 'POST', // Cambiado a POST
-            headers: {
-                'Content-Type': 'application/json', // Indicamos que el cuerpo es JSON
-            },
-            body: JSON.stringify({ profesor_id: String(profesorId) }), // Enviamos el ID como JSON
-            
-        });
+        // Validación del ID del profesor
+        if (!profesorId) {
+            throw new Error("El ID del profesor es requerido");
+        }
+        console.log("ID del profesor recibido:", profesorId);
 
-        console.log("Cuerpo enviado:", JSON.stringify({ profesor_id: String(profesorId) }));
 
-        if (!response.ok) {
-            throw new Error("Error en la carga de datos");
+        // Consulta con Supabase usando joins
+        const { data, error } = await supabase
+            .from('horarios')
+            .select(`
+                *,
+                profesores (apellido_nombre),
+                carreras (nombre_carrera)
+            `)
+            .eq('profesor_id', profesorId);
+
+        // Manejo de errores en la consulta
+        if (error) {
+            console.error("Error en la consulta:", error.message);
+            throw new Error("Error al obtener los horarios");
         }
 
-        const data = await response.json();
-        console.log(data)
-        return data;
+        // Verificar si hay datos
+        if (data.length === 0) {
+            return { message: "No se encontraron horarios para el profesor especificado", data: [] };
+        }
+
+        return { message: "Horarios encontrados", data };
 
     } catch (error) {
-        console.error("Error al obtener los horarios:", profesorId);
-        throw error; // Maneja el error como prefieras
+        console.error(`Error al obtener los horarios del profesor con ID ${profesorId}:`, error.message);
+        throw error;
     }
 };
 
 export default pedirHorarios;
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-const pedirHorarios = () => {
-    return new Promise((resolve, reject) => {
-        resolve(data)
-    })
-}
-
-export default pedirHorarios
-*/
 

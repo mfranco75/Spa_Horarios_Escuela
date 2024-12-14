@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import pedirDocentes from "../../functions/pedirDocentes";
 import "../../styles/Horarios.css"
 
 function Horarios({ CalendarComponent }) {
@@ -9,9 +10,8 @@ function Horarios({ CalendarComponent }) {
   useEffect(() => {
     const fetchDocentes = async () => {
       try {
-        const response = await fetch(import.meta.env.VITE_ENDPOINT_PROFESORES);
-        const data = await response.json();
-        setDocentes(data);
+        const docentes = await pedirDocentes();
+        setDocentes(docentes); // Actualiza el estado con los datos obtenidos
       } catch (error) {
         console.error("Error fetching docentes:", error);
       }
@@ -35,8 +35,10 @@ function Horarios({ CalendarComponent }) {
               key={docente.id}
               className={docente.id === selectedDocenteId ? "active" : ""}
               onClick={() => handleDocenteClick(docente.id)}
+              
             >
               {docente.apellido_nombre}
+            
             </li>
           ))}
         </ul>
@@ -49,3 +51,24 @@ function Horarios({ CalendarComponent }) {
 }
 
 export default Horarios;
+
+
+/*
+// Fetch docentes desde el Backend de Node js
+  useEffect(() => {
+    const fetchDocentes = async () => {
+      try {
+        const response = await fetch(import.meta.env.VITE_ENDPOINT_PROFESORES);
+        const data = await response.json();
+        setDocentes(data);
+      } catch (error) {
+        console.error("Error fetching docentes:", error);
+      }
+    };
+    fetchDocentes();
+    
+  }, []);
+
+  */
+
+

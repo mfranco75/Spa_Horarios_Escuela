@@ -17,6 +17,7 @@ const generarEventosCalendar = (horarios) => {
   return horarios.map((horario) => {
     let fechaBase;
     const diaDeLaSemana = horario.dia;
+    console.log('generar eventos calendar data :', horario)
 
     // Asignamos la fecha correspondiente al día
     switch (diaDeLaSemana) {
@@ -50,10 +51,12 @@ const generarEventosCalendar = (horarios) => {
       end: `${fechaBase}T${horario.hora_fin}`,
       allDay: false,
       extendedProps: {
-        profesor: horario.profesor_id,
-        dia: horario.dia,
-        comision: horario.comision,
+        profesor: horario.profesores.apellido_nombre,
+        carrera: horario.carreras.nombre_carrera,
         nivel: horario.nivel,
+        comision: horario.comision,
+        dia: horario.dia
+
       },
     };
   }).filter((evento) => evento !== null); // Eliminamos los eventos nulos

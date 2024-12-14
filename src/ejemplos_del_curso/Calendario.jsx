@@ -17,7 +17,8 @@ const Calendario = ({ id }) => {
     if (!id) return; // No hacemos nada si no hay un id
     pedirHorarios(id)
       .then((res) => {
-        const eventosGenerados = generarEventosCalendar(res);
+        const eventosGenerados = generarEventosCalendar(res.data);
+        console.log("Datos devueltos por Supabase:", res.data);
         setEventos(eventosGenerados); // Guardamos los eventos en el estado
       })
       .catch((err) => {
@@ -64,8 +65,11 @@ const Calendario = ({ id }) => {
           tippy(info.el, {
             content: `
               <strong>${info.event.title}</strong><br>
-              Profesór: ${info.event.extendedProps.profesor}<br>
-              Comisión: ${info.event.extendedProps.comision}
+              Profesor: ${info.event.extendedProps.profesor}<br>
+              Carrera: ${info.event.extendedProps.carrera}<br>
+              Nivel: ${info.event.extendedProps.nivel}<br>
+              Comisión: ${info.event.extendedProps.comision}<br>
+              Dia de la semana: ${info.event.extendedProps.dia}
             `,
             allowHTML: true,
             theme: 'light'
