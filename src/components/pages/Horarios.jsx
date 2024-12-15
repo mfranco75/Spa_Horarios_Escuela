@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import pedirDocentes from "../../functions/pedirDocentes";
 import "../../styles/Horarios.css"
-import CalendarComponent from "../CalendarComponent";
-
-
-CalendarComponent
 
 function Horarios({ CalendarComponent }) {
   const [docentes, setDocentes] = useState([]);
