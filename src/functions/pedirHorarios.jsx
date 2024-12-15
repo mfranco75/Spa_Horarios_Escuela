@@ -1,12 +1,13 @@
 import supabase from "../conexionDatabase";
 
+
 const pedirHorarios = async (profesorId) => {
     try {
         // Validación del ID del profesor
         if (!profesorId) {
             throw new Error("El ID del profesor es requerido");
         }
-        console.log("ID del profesor recibido:", profesorId);
+        //console.log("ID del profesor recibido:", profesorId);
 
 
         // Consulta con Supabase usando joins

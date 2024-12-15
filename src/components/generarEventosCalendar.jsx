@@ -17,7 +17,7 @@ const generarEventosCalendar = (horarios) => {
   return horarios.map((horario) => {
     let fechaBase;
     const diaDeLaSemana = horario.dia;
-    console.log('generar eventos calendar data :', horario)
+    //console.log('generar eventos calendar data :', horario)
 
     // Asignamos la fecha correspondiente al día
     switch (diaDeLaSemana) {

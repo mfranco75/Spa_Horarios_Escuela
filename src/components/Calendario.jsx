@@ -22,7 +22,7 @@ const Calendario = ({ id }) => {
     pedirHorarios(id)
       .then((res) => {
         const eventosGenerados = generarEventosCalendar(res.data);
-        console.log("Datos devueltos por Supabase:", res.data);
+        //console.log("Datos devueltos por Supabase:", res.data);
         setEventos(eventosGenerados); // Guardamos los eventos en el estado
       })
       .catch((err) => {

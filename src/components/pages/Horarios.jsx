@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import pedirDocentes from "../../functions/pedirDocentes";
 import "../../styles/Horarios.css"
+import CalendarComponent from "../CalendarComponent";
+
+
+CalendarComponent
 
 function Horarios({ CalendarComponent }) {
   const [docentes, setDocentes] = useState([]);
@@ -51,24 +55,3 @@ function Horarios({ CalendarComponent }) {
 }
 
 export default Horarios;
-
-
-/*
-// Fetch docentes desde el Backend de Node js
-  useEffect(() => {
-    const fetchDocentes = async () => {
-      try {
-        const response = await fetch(import.meta.env.VITE_ENDPOINT_PROFESORES);
-        const data = await response.json();
-        setDocentes(data);
-      } catch (error) {
-        console.error("Error fetching docentes:", error);
-      }
-    };
-    fetchDocentes();
-    
-  }, []);
-
-  */
-
-
