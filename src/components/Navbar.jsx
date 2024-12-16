@@ -2,18 +2,38 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import supabase from '../conexionDatabase.js';
 import "../styles/Navbar.css"
+import { set } from 'date-fns/fp';
 
 const Navbar = () => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
+  
 
   useEffect(() => {
     const fetchUser = async () => {
-      const { data } = await supabase.auth.getUser();
+      const { data, error } = await supabase.auth.getUser();
+      console.log('Usuario actual:', data?.user); // Depuración
+      console.error('Error al obtener el usuario:', error); // Depuración
+      if (error) {
+        console.error('Error al obtener el usuario:', error);
+      }
       setUser(data.user);
     };
+
     fetchUser();
+    // Escuchar cambios en el estado de autenticación
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    console.log('Cambio de sesión detectado:', session?.user);
+    setUser(session?.user || null);
+    });
+    
+    
+    // Limpieza de la suscripción al desmontar
+    return () => {
+      subscription.unsubscribe();
+    };
   }, []);
+
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
