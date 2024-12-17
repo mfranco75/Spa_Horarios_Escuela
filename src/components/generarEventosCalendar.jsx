@@ -1,6 +1,6 @@
 import { startOfWeek, addDays, format } from "date-fns";
 
-// Función para obtener los días de la semana (de lunes a sábado)
+// Función para obtener los días de la semana (de lunes a sábado) para generar eventos para FullCalendar en la semana actual
 const getWeekDays = () => {
   const start = startOfWeek(new Date(), { weekStartsOn: 1 }); // Lunes como primer día
   return Array.from({ length: 6 }, (_, index) => format(addDays(start, index), "yyyy-MM-dd"));
