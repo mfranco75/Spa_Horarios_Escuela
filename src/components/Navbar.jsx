@@ -23,7 +23,7 @@ const Navbar = () => {
     fetchUser();
     // Escuchar cambios en el estado de autenticación
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-    console.log('Cambio de sesión detectado:', session?.user);
+    //console.log('Cambio de sesión detectado:', session?.user);
     setUser(session?.user || null);
     });
     

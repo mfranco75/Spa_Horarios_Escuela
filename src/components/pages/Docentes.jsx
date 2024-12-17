@@ -15,6 +15,9 @@ const Docentes = () => {
           id,
           nivel,
           materia,
+          dia,
+          hora_inicio,
+          hora_fin,
           profesores (apellido_nombre),
           carreras (nombre_carrera)
         `);
@@ -140,6 +143,9 @@ const Docentes = () => {
                 <th style={{ padding: '10px', textAlign: 'left' }}>Carrera</th>
                 <th style={{ padding: '10px', textAlign: 'left' }}>Nivel</th>
                 <th style={{ padding: '10px', textAlign: 'left' }}>Materia</th>
+                <th style={{ padding: '10px', textAlign: 'left' }}>Dia</th>
+                <th style={{ padding: '10px', textAlign: 'left' }}>Hora de inicio</th>
+                <th style={{ padding: '10px', textAlign: 'left' }}>Hora de fin</th>
               </tr>
             </thead>
             <tbody>
@@ -149,6 +155,9 @@ const Docentes = () => {
                   <td style={{ padding: '10px' }}>{docente.carreras.nombre_carrera}</td>
                   <td style={{ padding: '10px', textAlign: 'center' }}>{docente.nivel}</td>
                   <td style={{ padding: '10px' }}>{docente.materia}</td>
+                  <td style={{ padding: '10px' }}>{docente.dia}</td>
+                  <td style={{ padding: '10px' }}>{docente.hora_inicio}</td>
+                  <td style={{ padding: '10px' }}>{docente.hora_fin}</td>
                 </tr>
               ))}
             </tbody>

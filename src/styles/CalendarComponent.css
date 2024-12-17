@@ -1,0 +1,23 @@
+.calendar-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Ocupa toda la altura del contenedor padre */
+    width: 100%; /* Ocupa todo el ancho disponible */
+    box-sizing: border-box; /* Evita desbordamientos por padding */
+  }
+  
+.calendar-message {
+    margin: 0 0 10px 0; /* Espacio inferior para el mensaje */
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .calendar-content {
+    flex: 1; /* Ocupa todo el espacio restante */
+    display: flex;
+    justify-content: center; /* Centra el calendario horizontalmente */
+    align-items: strech; /* Estira verticalmente */
+    overflow:hidden;
+  }
+  

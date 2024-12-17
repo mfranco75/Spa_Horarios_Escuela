@@ -1,50 +1,49 @@
 .horarios-container {
-    display: flex;
-    height: 100vh;
-  }
-  
-  .sidebar {
-    width: 25%;
-    color: black;
-    background-color: #f4f4f9;
-    border-right: 1px solid #ddd;
-    padding: 20px;
-    overflow-y: auto;
-  }
-  
-  .sidebar h2 {
-    color: rgb(36, 24, 65);
-    font-size: 1.5em;
-    margin-bottom: 10px;
-  }
-  
-  .sidebar ul {
-    color: black;
-    list-style: none;
-    padding: 0;
-  }
-  
-  .sidebar li {
-    color: black;
-    padding: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-  
-  .sidebar li:hover {
-    background-color: #120e3d;
-    color: white;
-  }
-  
-  .sidebar li.active {
-    background-color: #9195ca;
-    color: black;
-    font-weight: bold;
-  }
-  
-  .calendar-container {
-    flex: 1;
-    padding: 20px;
-    background-color: #fff;
-  }
-  
+  display: flex; /* Usa flexbox para alinear los elementos */
+  height: 100vh; /* Ocupa toda la altura de la pantalla */
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.sidebar {
+  width: 250px; /* Ancho fijo para la lista de docentes */
+  background-color: #f4f4f4; /* Color de fondo */
+  overflow-y: auto; /* Permite desplazamiento si hay demasiados docentes */
+  padding: 10px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Sombra a la derecha */
+  border-right: 1px solid #ddd; /* Separador */
+}
+
+.sidebar h2 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.sidebar li:hover,
+.sidebar li.active {
+  background-color: #007bff;
+  color: white;
+}
+
+.calendar-container {
+  flex: 1; /* Ocupa todo el espacio restante */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  padding: 10px; /* Espaciado interno */
+  box-sizing: border-box;
+  overflow: hidden; /* Evita desbordamiento */
+}

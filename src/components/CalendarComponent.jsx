@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import Calendario from "./Calendario";
 import pedirHorarios from "../functions/pedirHorarios";
+import "../styles/CalendarComponent.css"
+
 
 
 function CalendarComponent({ docenteId }) {
@@ -8,17 +10,26 @@ function CalendarComponent({ docenteId }) {
     if (docenteId) {
       // Fetch and update calendar data based on docenteId
       pedirHorarios(docenteId)
-      console.log(`Updating calendar for docente ID: ${docenteId}`);
+      
     }
   }, [docenteId]);
 
   return (
-    <div>
+    <div className="calendar-wrapper">
       <h2>Calendario</h2>
-      <p>{docenteId ? `Mostrando horarios para el docente ID: ${docenteId}` : "Selecciona un docente para ver su calendario."}</p>
-      <Calendario id={docenteId}/>
+      <p className="calendar-message">
+        {docenteId
+          ? `Mostrando horarios para el docente ID: ${docenteId}`
+          : "Selecciona un docente para ver su calendario."}
+      </p>
+      <div className="calendar-content">
+        <Calendario id={docenteId} />
+      </div>
     </div>
   );
-}
+}  
+ 
 
 export default CalendarComponent;
+
+
