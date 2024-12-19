@@ -11,6 +11,7 @@ import CalendarComponent from "./components/CalendarComponent.jsx";
 import './styles/App.css';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import { UserProvider } from './components/UserContext.jsx';
+import Footer from "./components/Footer.jsx"; 
 
 
 function App() {
@@ -59,6 +60,7 @@ function App() {
               />
             </Routes>
           </main>
+          <Footer/>
         </>
       </div>
     </Router>
@@ -67,31 +69,3 @@ function App() {
 }
 
 export default App;
-
-
-/*
-function App() {
-  
-  return (
-    <Router>
-      <div className="App">
-          <>
-            <Navbar />
-            <main>
-              <Routes>
-                <Route path="/login" element={<Login />} />
-                <Route path="/horarios" element={<Horarios CalendarComponent={CalendarComponent}/>} />
-                <Route path="/docentes" element={<Docentes />} />
-                <Route path="/alumnos" element={<Alumnos />} />
-                <Route path="/informes" element={<Informes />} />
-                
-              </Routes>
-            </main>
-          </>
-      </div>
-    </Router>
-  );
-}
-
-export default App;
-*/
