@@ -12,11 +12,11 @@ import './styles/App.css';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import { UserProvider } from './components/UserContext.jsx';
 import Footer from "./components/Footer.jsx"; 
+import Administrador from './components/pages/Administrador.jsx';
 
 
 function App() {
-
-  
+ 
   return (
     <UserProvider>
     <Router>
@@ -56,8 +56,16 @@ function App() {
                   <ProtectedRoute>
                     <Informes />
                   </ProtectedRoute>
-                }
+                }         
               />
+              <Route
+                path="/administrador"
+                element={
+                <ProtectedRoute requiredRole="admin">
+                  <Administrador />
+                </ProtectedRoute>
+          }
+        />
             </Routes>
           </main>
           <Footer/>
