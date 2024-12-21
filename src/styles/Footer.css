@@ -1,20 +1,16 @@
 .footer {
-    background-color: #333; /* Color de fondo oscuro */
-    color: #fff; /* Color de texto blanco */
-    text-align: center; /* Centra el contenido */
-    padding: 10px 0; /* Espaciado interno arriba y abajo */
-    position: fixed; /* Fija el footer al final */
-    bottom: 0; /* Lo coloca al fondo de la pantalla */
-    width: 100%; /* Ocupa todo el ancho */
-    font-size: 14px; /* Tamaño de la letra */
-  }
-  
-  .footer a {
-    color: #4da8da; /* Color del enlace */
-    text-decoration: none; /* Elimina subrayado */
-  }
-  
-  .footer a:hover {
-    text-decoration: underline; /* Subraya al pasar el mouse */
-  }
-  
+  text-align: center;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  color: #333;
+  border-top: 1px solid #ddd;
+}
+
+.footer a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}

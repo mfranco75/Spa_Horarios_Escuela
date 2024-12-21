@@ -49,6 +49,8 @@ const Navbar = () => {
         <li><Link to="/docentes">Docentes</Link></li>
         <li><Link to="/alumnos">Alumnos</Link></li>
         <li><Link to="/informes">Informes</Link></li>
+        <li><Link to="/administrador">Administrador</Link></li>
+        
         {user ? (
           <li>
             <button onClick={handleLogout}>Cerrar sesión</button>
