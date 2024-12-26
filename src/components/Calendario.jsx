@@ -42,7 +42,7 @@ const Calendario = ({ id }) => {
   return (
     <div className="calendar-container">
       <h1>Calendario de Horarios</h1>
-      <FullCalendar class = "calendar-container"
+      <FullCalendar
 
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]} // Plugins para las vistas
         initialView="timeGridWeek" // Vista inicial (semana con horarios)
