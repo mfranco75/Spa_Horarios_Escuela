@@ -8,24 +8,61 @@ export const UserProvider = ({ children }) => {
   const [role, setRole] = useState(null);
 
   useEffect(() => {
-    const checkUser = async () => {
-      const { data } = await supabase.auth.getUser();
-      if (data.user) {
-        setUser(data.user);
-        // Obtener el rol del usuario desde la tabla `users`
-        const { data: userData, error } = await supabase
-          .from('users')
-          .select('role')
-          .eq('id', data.user.id)
-          .single();
-        if (userData) {
-          setRole(userData.role);
-        }
+    const checkSession = async () => {
+      const { data: sessionData, error: sessionError } = await supabase.auth.getSession();
+  
+      if (sessionError) {
+        console.error('Error al obtener la sesión:', sessionError);
+        setUser(null);
+        setRole(null);
+        return;
+      }
+  
+      if (sessionData.session) {
+        const user = sessionData.session.user;
+        setUser(user);
+        fetchUserRole(user.id);
+      } else {
+        setUser(null);
+        setRole(null);
       }
     };
-    checkUser();
+  
+    const fetchUserRole = async (userId) => {
+      const { data: userData, error } = await supabase
+        .from('users')
+        .select('role')
+        .eq('id', userId)
+        .single();
+  
+      if (error) {
+        console.error('Error al obtener el rol del usuario:', error);
+        return;
+      }
+  
+      setRole(userData?.role || null);
+    };
+  
+    // Escuchar cambios en el estado de autenticación
+    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) {
+        setUser(session.user);
+        fetchUserRole(session.user.id);
+      } else {
+        setUser(null);
+        setRole(null);
+      }
+    });
+  
+    checkSession();
+  
+    // Limpieza de la suscripción al desmontar
+    return () => {
+      authListener.subscription.unsubscribe(); // Cambiado para usar el método correcto
+    };
   }, []);
-
+  
+  
   return (
     <UserContext.Provider value={{ user, role, setUser, setRole }}>
       {children}

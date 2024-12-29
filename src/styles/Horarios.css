@@ -1,10 +1,18 @@
+/* Horarios.css */
 .horarios-container {
-  display: flex; /* Usa flexbox para alinear los elementos */
-  height: 100vh; /* Ocupa toda la altura de la pantalla */
-  margin: 0;
-  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
 }
 
+.sidebar {
+  flex: 1;
+  min-width: 250px;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 8px;
+}
 .sidebar {
   width: 250px; /* Ancho fijo para la lista de docentes */
   background-color: #f4f4f4; /* Color de fondo */
@@ -33,17 +41,101 @@
 
 .sidebar li:hover,
 .sidebar li.active {
+  background-color: #3f51b5;
+  color: white;
+}
+
+
+
+
+.calendar-container {
+  flex: 3;
+  min-width: 300px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+/* Media Query para pantallas pequeñas */
+@media (max-width: 768px) {
+  .horarios-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .calendar-container {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .calendar-container {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+
+
+
+/* ANTIGUO ESTILO DE HORARIOS.CSS 
+
+
+.horarios-container {
+  display: flex; /* Usa flexbox para alinear los elementos 
+  height: 100vh; /* Ocupa toda la altura de la pantalla 
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.sidebar {
+  width: 250px; /* Ancho fijo para la lista de docentes 
+  background-color: #f4f4f4; /* Color de fondo 
+  overflow-y: auto; /* Permite desplazamiento si hay demasiados docentes 
+  padding: 10px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Sombra a la derecha 
+  border-right: 1px solid #ddd; /* Separador 
+}
+
+.sidebar h2 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.sidebar li:hover,
+.sidebar li.active {
   background-color: #007bff;
   color: white;
 }
 
 .calendar-container {
-  flex: 1; /* Ocupa todo el espacio restante */
+  flex: 1; /* Ocupa todo el espacio restante 
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
-  padding: 10px; /* Espaciado interno */
+  padding: 10px; /* Espaciado interno 
   box-sizing: border-box;
-  overflow: hidden; /* Evita desbordamiento */
+  overflow: hidden; /* Evita desbordamiento 
 }

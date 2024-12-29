@@ -1,39 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { AppBar, Toolbar, Typography, Button } from '@mui/material';
+import { useUser } from './UserContext';
 import supabase from '../conexionDatabase.js';
-import "../styles/Navbar.css"
-import { set } from 'date-fns/fp';
+
 
 const Navbar = () => {
-  const [user, setUser] = useState(null);
+  const { user, role, setUser } = useUser();
   const navigate = useNavigate();
-  
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const { data, error } = await supabase.auth.getUser();
-      console.log('Usuario actual:', data?.user); // Depuración
-      console.error('Error al obtener el usuario:', error); // Depuración
-      if (error) {
-        console.error('Error al obtener el usuario:', error);
-      }
-      setUser(data.user);
-    };
-
-    fetchUser();
-    // Escuchar cambios en el estado de autenticación
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-    //console.log('Cambio de sesión detectado:', session?.user);
-    setUser(session?.user || null);
-    });
-    
-    
-    // Limpieza de la suscripción al desmontar
-    return () => {
-      subscription.unsubscribe();
-    };
-  }, []);
-
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -42,24 +16,47 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar">
-      <div className="navbar-brand">Gestión de Escuela</div>
-      <ul className="navbar-menu">
-        <li><Link to="/horarios">Horarios</Link></li>
-        <li><Link to="/docentes">Docentes</Link></li>
-        <li><Link to="/alumnos">Alumnos</Link></li>
-        <li><Link to="/informes">Informes</Link></li>
-        <li><Link to="/administrador">Administrador</Link></li>
-        
+    <AppBar position="sticky">
+      <Toolbar>
+        <Typography variant="h6" sx={{ flexGrow: 1 }}>
+          Gestión de Escuela
+        </Typography>
+
         {user ? (
-          <li>
-            <button onClick={handleLogout}>Cerrar sesión</button>
-          </li>
+          <>
+            <Button color="inherit" component={Link} to="/">
+              Inicio
+            </Button>
+            <Button color="inherit" component={Link} to="/horarios">
+              Horarios
+            </Button>
+            {role === 'admin' && (
+              <>
+                <Button color="inherit" component={Link} to="/docentes">
+                  Docentes
+                </Button>
+                <Button color="inherit" component={Link} to="/administrador">
+                  Administrador
+                </Button>
+              </>
+            )}
+            <Button color="inherit" component={Link} to="/alumnos">
+              Alumnos
+            </Button>
+            <Button color="inherit" component={Link} to="/informes">
+              Informes
+            </Button>
+            <Button color="inherit" onClick={handleLogout}>
+              Cerrar sesión
+            </Button>
+          </>
         ) : (
-          <li><Link to="/login">Iniciar sesión</Link></li>
+          <Button color="inherit" component={Link} to="/login">
+            Iniciar sesión
+          </Button>
         )}
-      </ul>
-    </nav>
+      </Toolbar>
+    </AppBar>
   );
 };
 
