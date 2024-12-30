@@ -27,7 +27,7 @@ const theme = createTheme({
       main: '#3f51b5', // Cambia el color principal
     },
     secondary: {
-      main: '#f50057', // Cambia el color secundario
+      main: '#80D8FF', // Cambia el color secundario
     },
   },
   typography: {
@@ -63,7 +63,7 @@ function MainApp({ user, setUser }) {
   };
 
   return (
-    <>
+    <div className="App" display="grid" gridTemplateRows="auto 1fr auto" style={{ height: "100vh" }}>
       {/* Barra de navegación */}
       
       <Navbar user={user} handleLogout={handleLogout} />
@@ -126,11 +126,31 @@ function MainApp({ user, setUser }) {
           marginTop: "auto",
         }}
       >
-        <Typography variant="body2" align="center">
-          © 2024 Mi Aplicación - Todos los derechos reservados.
+        <Typography variant="body2" align="right" sx={{ marginLeft: "20px" }}>
+          © 2024 Gestión de Escuela - Aplicación desarrollada por{' '}
+          <Box
+            component="span"
+            sx={{ fontWeight: 'bold', color: '#80D8FF' }} // Bordo oscuro
+          >
+            Mariano Franco
+          </Box>
+          {' '}(<Box
+            component="a"
+            href="mailto:marianofranco1975@gmail.com"
+            sx={{ 
+              fontWeight: 'bold',
+              textDecoration: 'none',
+              color: "white",
+              '&:hover': { textDecoration: 'underline' },
+            }}
+          >
+            marianofranco1975@gmail.com
+          </Box>)
         </Typography>
       </Box>
-    </>
+
+
+    </div>
   );
 }
 

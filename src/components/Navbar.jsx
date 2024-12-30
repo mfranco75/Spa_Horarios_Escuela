@@ -46,9 +46,19 @@ const Navbar = () => {
             <Button color="inherit" component={Link} to="/informes">
               Informes
             </Button>
-            <Button color="inherit" onClick={handleLogout}>
+            <Button sx={{ color: 'secondary.main' }} onClick={handleLogout}>
               Cerrar sesión
             </Button>
+            <Typography variant="caption" display="block" sx={{
+               textTransform: 'lowercase',
+               ml: 1,
+               backgroundColor: 'primary.light',
+               color: 'primary.contrastText',
+               padding: '2px 6px',
+               borderRadius: '4px',
+               }}>
+              {user.email}
+            </Typography>
           </>
         ) : (
           <Button color="inherit" component={Link} to="/login">
