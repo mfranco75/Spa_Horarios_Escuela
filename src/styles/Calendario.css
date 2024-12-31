@@ -1,0 +1,7 @@
+.calendar-container {
+    height: 100vh; /* Ocupa toda la altura de la ventana */
+    width: 100%;   /* Ocupa todo el ancho disponible */
+    display: flex; /* Asegura que el contenido se ajuste correctamente */
+    flex-direction: column;
+  }
+  

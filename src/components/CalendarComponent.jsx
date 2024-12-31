@@ -15,17 +15,10 @@ function CalendarComponent({ docenteId }) {
   }, [docenteId]);
 
   return (
-    <div className="calendar-wrapper">
-      <h2>Calendario</h2>
-      <p className="calendar-message">
-        {docenteId
-          ? `Mostrando horarios para el docente ID: ${docenteId}`
-          : "Selecciona un docente para ver su calendario."}
-      </p>
-      <div className="calendar-content">
-        <Calendario id={docenteId} />
-      </div>
+    <div className="calendar-container">
+      <Calendario id={docenteId} />
     </div>
+   
   );
 }  
  

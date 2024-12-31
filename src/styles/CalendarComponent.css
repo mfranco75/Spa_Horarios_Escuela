@@ -1,9 +1,11 @@
-.calendar-wrapper {
+/* ver tamaño de la ventana */
+.calendar-container {
     display: flex;
     flex-direction: column;
-    height: 100%; /* Ocupa toda la altura del contenedor padre */
+    height: 700px;
     width: 100%; /* Ocupa todo el ancho disponible */
     box-sizing: border-box; /* Evita desbordamientos por padding */
+    
   }
   
 .calendar-message {
@@ -18,6 +20,6 @@
     display: flex;
     justify-content: center; /* Centra el calendario horizontalmente */
     align-items: strech; /* Estira verticalmente */
-    overflow:hidden;
+        overflow:hidden;
   }
   

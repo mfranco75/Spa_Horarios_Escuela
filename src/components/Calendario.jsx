@@ -9,6 +9,7 @@ import pedirHorarios from "../functions/pedirHorarios";
 import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css'; // Estilos para tooltips
 import generarEventosCalendar from "./generarEventosCalendar";
+import "../styles/Calendario.css";
 
 
 
@@ -41,7 +42,7 @@ const Calendario = ({ id }) => {
 
   return (
     <div className="calendar-container">
-      <h1>Calendario de Horarios</h1>
+      
       <FullCalendar
 
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin]} // Plugins para las vistas
@@ -52,7 +53,7 @@ const Calendario = ({ id }) => {
           center: "title", // Título centrado
           right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek", // Cambios de vista
         }}
-        
+        height="100%" // Ajusta la altura al contenedor 
         events={eventos} // Pasamos los eventos generados
         editable={false} // NO Permitir mover eventos
         selectable={true} // Permitir selección de rangos
