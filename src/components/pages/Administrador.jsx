@@ -1,5 +1,19 @@
+
 import React, { useState, useEffect } from 'react';
 import supabase from '../../conexionDatabase';
+import {
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogTitle,
+    Button,
+    TextField,
+    Select,
+    MenuItem,
+    FormControl,
+    InputLabel,
+  } from '@mui/material';
+  
 
 const Administrador = () => {
     const [docentes, setDocentes] = useState([]);
@@ -8,6 +22,7 @@ const Administrador = () => {
     const [carreras, setCarreras] = useState([]);
     const [profesores, setProfesores] = useState([]);
     const [editingDocente, setEditingDocente] = useState(null);
+    const [openEditModal, setOpenEditModal] = useState(false);
 
     useEffect(() => {
         const fetchDocentes = async () => {
@@ -96,6 +111,7 @@ const Administrador = () => {
             profesor_id: docente.profesores.id,
             carrera_id: docente.carreras.id,
         });
+        setOpenEditModal(true);
     };
 
     const handleEditChange = (e) => {
@@ -122,6 +138,7 @@ const Administrador = () => {
             console.error('Error updating docente:', error);
         } else {
             setEditingDocente(null);
+            setOpenEditModal(false);
     
             // Refrescar datos desde la base de datos
             const { data, error: fetchError } = await supabase
@@ -259,8 +276,109 @@ const Administrador = () => {
                     </table>
                 </div>
             </div>
+            {/* Modal de edición */}
+            <Dialog open={openEditModal} onClose={() => setOpenEditModal(false)} fullWidth>
+            <DialogTitle>Editar Docente</DialogTitle>
+            <DialogContent>
+                <FormControl fullWidth margin="normal">
+                    <InputLabel>Docente</InputLabel>
+                    <Select
+                    name="profesor_id"
+                    value={editingDocente?.profesor_id || ''}
+                    onChange={handleEditChange}
+                    >
+                    {profesores.map((profesor) => (
+                        <MenuItem key={profesor.id} value={profesor.id}>
+                        {profesor.apellido_nombre}
+                        </MenuItem>
+                    ))}
+                    </Select>
+                </FormControl>
+                <FormControl fullWidth margin="normal">
+                    <InputLabel>Carrera</InputLabel>
+                    <Select
+                    name="carrera_id"
+                    value={editingDocente?.carrera_id || ''}
+                    onChange={handleEditChange}
+                    >
+                    {carreras.map((carrera) => (
+                        <MenuItem key={carrera.id} value={carrera.id}>
+                        {carrera.nombre_carrera}
+                        </MenuItem>
+                    ))}
+                    </Select>
+                </FormControl>
+                <TextField
+                    fullWidth
+                    margin="normal"
+                    label="Nivel"
+                    name="nivel"
+                    type="number"
+                    value={editingDocente?.nivel || ''}
+                    onChange={handleEditChange}
+                />
+                <TextField
+                    fullWidth
+                    margin="normal"
+                    label="Materia"
+                    name="materia"
+                    value={editingDocente?.materia || ''}
+                    onChange={handleEditChange}
+                />
+                <TextField
+                    fullWidth
+                    margin="normal"
+                    label="Comisión"
+                    name="comision"
+                    value={editingDocente?.comision || ''}
+                    onChange={handleEditChange}
+                />
+                <TextField
+                    fullWidth
+                    margin="normal"
+                    label="Día"
+                    name="dia"
+                    value={editingDocente?.dia || ''}
+                    onChange={handleEditChange}
+                />
+                <TextField
+                    fullWidth
+                    margin="normal"
+                    label="Hora de inicio"
+                    name="hora_inicio"
+                    type="time"
+                    value={editingDocente?.hora_inicio || ''}
+                    onChange={handleEditChange}
+                />
+                <TextField
+                    fullWidth
+                    margin="normal"
+                    label="Hora de fin"
+                    name="hora_fin"
+                    type="time"
+                    value={editingDocente?.hora_fin || ''}
+                    onChange={handleEditChange}
+                />
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={() => setOpenEditModal(false)} color="secondary">
+                    Cancelar
+                </Button>
+                <Button onClick={handleSaveChanges} color="primary">
+                    Guardar
+                </Button>
+                </DialogActions>
+            </Dialog>
+            </div>                    
+            
+    );
+};
 
-            {editingDocente && (
+export default Administrador;
+
+
+/* 
+{editingDocente && (
                 <div className="edit-panel" style={{ marginTop: '20px', padding: '20px', backgroundColor: '#FFFFFF', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
                 <h3>Editar Docente</h3>
                 <label style={{ display: 'block', marginBottom: '10px' }}>
@@ -379,7 +497,4 @@ const Administrador = () => {
                 </div>
             )}
         </div>
-    );
-};
-
-export default Administrador;
+*/
