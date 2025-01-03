@@ -308,15 +308,20 @@ const Administrador = () => {
                     ))}
                     </Select>
                 </FormControl>
-                <TextField
-                    fullWidth
-                    margin="normal"
-                    label="Nivel"
-                    name="nivel"
-                    type="number"
-                    value={editingDocente?.nivel || ''}
-                    onChange={handleEditChange}
-                />
+                <FormControl fullWidth margin="normal">
+                    <InputLabel>Nivel</InputLabel>
+                    <Select
+                        name="nivel"
+                        value={editingDocente?.nivel || ''}
+                        onChange={handleEditChange}
+                    >
+                        {[0, 1, 2, 3, 4].map((nivel) => (
+                            <MenuItem key={nivel} value={nivel}>
+                                {nivel}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
                 <TextField
                     fullWidth
                     margin="normal"
@@ -357,7 +362,18 @@ const Administrador = () => {
                     name="hora_fin"
                     type="time"
                     value={editingDocente?.hora_fin || ''}
-                    onChange={handleEditChange}
+                    onChange={(e) => {
+                        const horaInicio = editingDocente?.hora_inicio || '';
+                        const horaFin = e.target.value;
+                        if (horaInicio && horaFin < horaInicio) {
+                            alert("La hora de fin no puede ser menor que la hora de inicio.");
+                        } else {
+                            handleEditChange(e);
+                        }
+                    }}
+
+
+
                 />
                 </DialogContent>
                 <DialogActions>

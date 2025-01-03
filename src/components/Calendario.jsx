@@ -80,10 +80,6 @@ const Calendario = ({ id }) => {
             theme: 'light'
           });
         }}
-        eventClick={(info) => {
-          alert(`Evento: ${info.event.title}`);
-          console.log(info.event.extendedProps); // Muestra más detalles del evento
-        }}
         eventDrop={(info) => {
           alert(`El evento ${info.event.title} fue movido.`);
         }}
