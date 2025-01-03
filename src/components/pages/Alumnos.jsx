@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { TextField, Box, List, ListItem, ListItemButton, ListItemText, Typography, useMediaQuery } from "@mui/material";
+import { TextField, Box, Select, MenuItem, List, ListItem, ListItemButton, ListItemText, Typography, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import pedirCarreras from "../../functions/pedirCarreras";
 
-function HorariosCarreras({ CalendarComponent }) {
+function Alumnos({ CalendarComponent }) {
+  
   const [carreras, setCarreras] = useState([]);
   const [filteredCarreras, setFilteredCarreras] = useState([]);
   const [selectedCarreraId, setSelectedCarreraId] = useState(null);
@@ -30,6 +31,11 @@ function HorariosCarreras({ CalendarComponent }) {
   // Handle selection of a carrera
   const handleCarreraClick = (id) => {
     setSelectedCarreraId(id);
+  };
+
+  const niveles = [0, 1, 2, 3, 4];
+  const handleNivelChange = (event) => {
+    setSelectedNivel(event.target.value);
   };
 
   
@@ -81,14 +87,13 @@ function HorariosCarreras({ CalendarComponent }) {
         </List>
       </Box>
 
-      {/* Calendario */}
+      {/* menu de niveles y Calendario */}
       <Box
         sx={{
           flex: "3",
           width: "100%",
         }}
       >
-        Calendario...
         <Box
           sx={{
             display: "flex",
@@ -97,31 +102,29 @@ function HorariosCarreras({ CalendarComponent }) {
             mb: 2,
           }}
         >
-          <Typography variant="h6" gutterBottom>
-            Seleccionar Nivel
-          </Typography>
+        <Typography variant="h6" gutterBottom>
+        Seleccionar Nivel
+      </Typography>
           <TextField
-            select
             label="Nivel"
-            value={selectedNivel}
-            onChange={(e) => setSelectedNivel(e.target.value)}
-            SelectProps={{
-              native: true,
-            }}
             variant="outlined"
+            select
+            value={selectedNivel || ""}
+            onChange={handleNivelChange}
+            fullWidth
           >
-            {[0, 1, 2, 3, 4].map((nivel) => (
-              <option key={nivel} value={nivel}>
+            {niveles.map((nivel) => (
+              <MenuItem key={nivel} value={nivel}>
                 {nivel}
-              </option>
+              </MenuItem>
             ))}
-          </TextField>
+          </TextField>  
         </Box>
         {/*<CalendarComponentAlumnos carreraId={selectedCarreraId} nivel= {selectedNivel} />*/}
-        {console.log("Carrera seleccionada:", selectedCarreraId, " Nivel seleccionado:", selectedNivel)}
+        {console.log("Carrera seleccionada:", selectedCarreraId, "Nivel seleccionado:", selectedNivel)}
       </Box>
     </Box>
   );
 }
 
-export default HorariosCarreras;
+export default Alumnos;
