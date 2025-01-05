@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { TextField, Box, Select, MenuItem, List, ListItem, ListItemButton, ListItemText, Typography, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import pedirCarreras from "../../functions/pedirCarreras";
+import CalendarComponentAlumnos from "../CalendarComponentAlumnos";
 
-function Alumnos({ CalendarComponent }) {
+function Alumnos() {
   
   const [carreras, setCarreras] = useState([]);
   const [filteredCarreras, setFilteredCarreras] = useState([]);
@@ -120,9 +121,8 @@ function Alumnos({ CalendarComponent }) {
             ))}
           </TextField>  
         </Box>
-        {/*<CalendarComponentAlumnos carreraId={selectedCarreraId} nivel= {selectedNivel} />*/}
-        {console.log("Carrera seleccionada:", selectedCarreraId, "Nivel seleccionado:", selectedNivel)}
-      </Box>
+          <CalendarComponentAlumnos carreraId={selectedCarreraId} nivel= {selectedNivel} />
+        </Box>
     </Box>
   );
 }

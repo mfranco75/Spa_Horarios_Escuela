@@ -12,7 +12,10 @@ import generarEventosCalendar from "./generarEventosCalendar";
 import "../styles/Calendario.css";
 
 
-const Calendario = ({ id }) => {
+
+
+
+const CalendarioAlumnos = ({ carreraId , nivel }) => {
   const [eventos, setEventos] = useState([]);
 
   useEffect(() => {
@@ -85,4 +88,4 @@ const Calendario = ({ id }) => {
   );
 };
 
-export default Calendario;
+export default CalendarioAlumnos;

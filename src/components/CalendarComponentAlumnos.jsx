@@ -1,23 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import FullCalendar from "@fullcalendar/react"; // Componente de FullCalendar
 import dayGridPlugin from "@fullcalendar/daygrid"; // Vista de cuadrícula diaria
 import timeGridPlugin from "@fullcalendar/timegrid"; // Vista de cuadrícula horaria
 import listPlugin from '@fullcalendar/list'; // Importar el plugin de lista
 import interactionPlugin from "@fullcalendar/interaction"; // Interacciones como drag & drop
 import esLocale from '@fullcalendar/core/locales/es'; // Importa el idioma español
-import pedirHorarios from "../functions/pedirHorarios";
+import "../styles/CalendarComponent.css";
+import pedirHorariosCarreraNivel from "../functions/pedirHorariosCarreraNivel";
 import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css'; // Estilos para tooltips
 import generarEventosCalendar from "./generarEventosCalendar";
 import "../styles/Calendario.css";
 
 
-const Calendario = ({ id }) => {
+function CalendarComponentAlumnos({ carreraId, nivel }) {
+  const [horarios, setHorarios] = useState([]);
   const [eventos, setEventos] = useState([]);
-
+  
   useEffect(() => {
-    if (!id) return; // No hacemos nada si no hay un id
-    pedirHorarios(id)
+    if ((!carreraId || nivel === null || nivel === undefined)  ) return; // No hacemos nada si no hay un id
+    pedirHorariosCarreraNivel(carreraId, nivel)
       .then((res) => {
         const eventosGenerados = generarEventosCalendar(res.data);
         //console.log("Datos devueltos por Supabase:", res.data);
@@ -26,8 +28,9 @@ const Calendario = ({ id }) => {
       .catch((err) => {
         console.error("Error al cargar los horarios:", err);
       });
-  }, [id]);
+  }, [carreraId, nivel]);
 
+  // Función para generar un color aleatorio a partir del nombre de la materia
   const generateColor = (name) => {
     let hash = 0;
     for (let i=0; i < name.length; i++) {
@@ -36,6 +39,7 @@ const Calendario = ({ id }) => {
     const color = `hsl(${hash % 360}, 60%, 45%)`;
     return color
   }
+
 
   return (
     <div className="calendar-container">
@@ -83,6 +87,8 @@ const Calendario = ({ id }) => {
       />
     </div>
   );
-};
+}
 
-export default Calendario;
+export default CalendarComponentAlumnos;
+
+
