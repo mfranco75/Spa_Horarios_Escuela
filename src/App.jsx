@@ -63,7 +63,7 @@ function MainApp({ user, setUser }) {
   };
 
   return (
-    <div className="App" display="grid" gridTemplateRows="auto 1fr auto" style={{ height: "100vh" }}>
+    <div className="App" >
       {/* Barra de navegación */}
       
       <Navbar user={user} handleLogout={handleLogout} />
@@ -127,7 +127,7 @@ function MainApp({ user, setUser }) {
         }}
       >
         <Typography variant="body2" align="right" sx={{ marginLeft: "20px" }}>
-          © 2024 Gestión de Escuela - Aplicación desarrollada por{' '}
+          © 2025 Gestión de Escuela - Aplicación desarrollada por{' '}
           <Box
             component="span"
             sx={{ fontWeight: 'bold', color: '#80D8FF' }} // Bordo oscuro

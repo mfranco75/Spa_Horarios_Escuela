@@ -61,6 +61,7 @@ function CalendarComponentAlumnos({ carreraId, nivel }) {
         nowIndicator={true} // Línea indicadora de la hora actual
         slotMinTime="09:00:00"
         allDaySlot={false}
+        
         eventDidMount={(info) => {
           const color = generateColor(info.event.title);
           info.el.style.backgroundColor = color;
@@ -75,7 +76,8 @@ function CalendarComponentAlumnos({ carreraId, nivel }) {
               Carrera: ${info.event.extendedProps.carrera}<br>
               Nivel: ${info.event.extendedProps.nivel}<br>
               Comisión: ${info.event.extendedProps.comision}<br>
-              Dia de la semana: ${info.event.extendedProps.dia}
+              Dia de la semana: ${info.event.extendedProps.dia} :  ${info.event.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit',hourCycle:'h23' })} - 
+              ${info.event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit',hourCycle:'h23' })}
             `,
             allowHTML: true,
             theme: 'light'

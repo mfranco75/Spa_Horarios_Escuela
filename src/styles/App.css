@@ -1,17 +1,22 @@
-
 html, body {
-  height: 100%; /* Asegura que el body ocupe toda la altura */
+  height: 100%;
+  width: 100%;
   margin: 0;
+  padding: 0; /* Asegura que no haya espacios adicionales */
+  overflow-x: hidden; /* Evita scroll horizontal no deseado */
 }
 
 .App {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Ocupa toda la altura del viewport */
+  min-height: 100vh;
+  width: 100%; /* Asegura que ocupe todo el ancho */
 }
 
 main {
-  flex: 1; /* El contenido principal toma el espacio restante */
+  flex: 1;
+  width: 100%; /* Asegura que el contenido principal ocupe todo el ancho */
+  padding: 0; /* Elimina padding adicional */
 }
 
 footer {
@@ -20,11 +25,8 @@ footer {
   background-color: #f8f9fa;
   color: #333;
   border-top: 1px solid #ddd;
+  width: 100%; /* Asegura que el footer ocupe todo el ancho */
 }
-
-
-
-
 
 
 
