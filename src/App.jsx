@@ -8,8 +8,8 @@ import supabase from "./conexionDatabase.js";
 import { UserProvider } from "./components/UserContext.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
-import Login from "./components/pages/Login";
-
+import Login from "./components/pages/Login.jsx";
+import Register from "./components/pages/Register.jsx";
 import Horarios from "./components/pages/Horarios.jsx";
 import Docentes from "./components/pages/Docentes.jsx";
 import Alumnos from "./components/pages/Alumnos.jsx";
@@ -73,6 +73,7 @@ function MainApp({ user, setUser }) {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route
             path="/horarios"
             element={

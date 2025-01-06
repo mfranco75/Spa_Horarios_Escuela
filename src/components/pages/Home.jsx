@@ -15,6 +15,8 @@ import demo1 from '../../demoweb1.png';
 import demo2 from '../../demoweb2.png';
 import demo3 from '../../demoweb3.png';
 
+import { Link } from 'react-router-dom';
+
 function Home() {
   return (
     <Container sx={{ width: "100%" , padding : 4 }}>
@@ -96,7 +98,11 @@ function Home() {
           <Typography variant="h5" gutterBottom>
             ¡Empieza a gestionar tu escuela hoy!
           </Typography>
-          <Button variant="contained" color="secondary" size="large">
+          <Button variant="contained" 
+                  color="secondary" 
+                  size="large"
+                  component={Link}
+                  to="/register">
             Registrarse
           </Button>
         </Box>

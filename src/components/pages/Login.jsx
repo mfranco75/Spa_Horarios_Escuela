@@ -12,6 +12,8 @@ import {
   Paper,
 } from '@mui/material';
 
+import { Link } from 'react-router-dom';
+
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -95,6 +97,17 @@ const Login = () => {
             sx={{ mt: 3 }}
           >
             Iniciar Sesión
+          </Button>
+          
+          <Button 
+            fullWidth
+            type="submit"
+            variant="contained"
+            color="secondary" 
+            sx={{ mt: 3 }}
+            component={Link}
+            to="/register">
+            Registrarse
           </Button>
         </Box>
       </Paper>
