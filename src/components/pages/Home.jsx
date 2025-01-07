@@ -11,11 +11,13 @@ import {
 } from '@mui/material';
 
 // Importar imágenes locales
-import demo1 from '../../demoweb1.png';
-import demo2 from '../../demoweb2.png';
-import demo3 from '../../demoweb3.png';
+import demo1 from '../../assets/demoweb1.png';
+import demo2 from '../../assets/demoweb2.png';
+import demo3 from '../../assets/demoweb3.png';
+import demo4 from '../../assets/demoweb4.png';
 
 import { Link } from 'react-router-dom';
+import Footer from '../Footer';
 
 function Home() {
   return (
@@ -58,40 +60,54 @@ function Home() {
           ))}
         </Grid2>
 
-        {/* Galería Section */}
+       {/* Galería Section */}
         <Typography variant="h4" gutterBottom sx={{ mt: 6 }}>
           Galería
         </Typography>
-        <Grid2 container spacing={2}>
-        {[demo1, demo2, demo3].map((image, index) => (
-          <Grid2 xs={12} md={4} key={index}>
-            <Box
-              sx={{
-                overflow: 'hidden', // Oculta las partes que sobresalen
-                borderRadius: 2, // Bordes redondeados
-                position: 'relative', // Necesario para el hover
-                width: '100%', // Ocupa todo el ancho de la columna
-                '&:hover img': {
-                  transform: 'scale(1.5)', // Agrandar al pasar el mouse
-                  transition: 'transform 0.3s ease-in-out', // Transición suave
-                },
-              }}
+        <Grid2 
+          container 
+          spacing={2} 
+          sx={{ justifyContent: 'center', alignItems: 'stretch' }} // Centrar y alinear correctamente
+        >
+          {[demo1, demo2, demo3, demo4].map((image, index) => (
+            <Grid2 
+              xs={12} 
+              sm={6} 
+              md={4} 
+              lg={3} 
+              key={index} 
+              sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} // Centrar el contenido
             >
               <Box
-                component="img"
-                src={image}
-                alt={`Demo ${index + 1}`}
                 sx={{
-                  width: '100%', // Asegura que ocupe todo el ancho del contenedor
-                  height: '300px', // Tamaño uniforme para las imágenes
-                  objectFit: 'cover', // Ajusta la imagen al contenedor
-                  transition: 'transform 0.3s ease-in-out', // Transición inicial
+                  overflow: 'hidden', // Oculta las partes que sobresalen
+                  borderRadius: 2, // Bordes redondeados
+                  position: 'relative', // Necesario para el hover
+                  width: '100%', // Asegura que ocupe todo el ancho de la columna
+                  maxWidth: '400px', // Tamaño máximo uniforme
+                  height: '400px', // Altura uniforme
+                  '&:hover img': {
+                    transform: 'scale(1.1)', // Agrandar ligeramente al pasar el mouse
+                    transition: 'transform 0.3s ease-in-out', // Transición suave
+                  },
                 }}
-              />
-            </Box>
-          </Grid2>
-        ))}
-      </Grid2>
+              >
+                <Box
+                  component="img"
+                  src={image}
+                  alt={`Demo ${index + 1}`}
+                  sx={{
+                    width: '100%', // Asegura que ocupe todo el ancho del contenedor
+                    height: '100%', // Asegura que ocupe todo el alto del contenedor
+                    objectFit: 'cover', // Ajusta la imagen al contenedor
+                    transition: 'transform 0.3s ease-in-out', // Transición inicial
+                  }}
+                />
+              </Box>
+            </Grid2>
+          ))}
+        </Grid2>
+
 
         {/* Call to Action Section */}
         <Box textAlign="center" sx={{ mt: 6 }}>
@@ -106,6 +122,8 @@ function Home() {
             Registrarse
           </Button>
         </Box>
+
+        <Footer />
       </Container>
   );
 }

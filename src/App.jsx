@@ -20,6 +20,7 @@ import Home from "./components/pages/Home.jsx"; // Asegúrate de tener este comp
 
 import "./styles/App.css";
 import Navbar from "./components/Navbar.jsx";
+import Footer from "./components/Footer.jsx";
 
 const theme = createTheme({
   palette: {
@@ -148,6 +149,7 @@ function MainApp({ user, setUser }) {
             marianofranco1975@gmail.com
           </Box>)
         </Typography>
+        
       </Box>
 
 
