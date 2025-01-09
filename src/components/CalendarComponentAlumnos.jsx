@@ -13,13 +13,13 @@ import generarEventosCalendar from "./generarEventosCalendar";
 import "../styles/Calendario.css";
 
 
-function CalendarComponentAlumnos({ carreraId, nivel }) {
+function CalendarComponentAlumnos({ carreraId, nivel, escuelaId }) {
   const [horarios, setHorarios] = useState([]);
   const [eventos, setEventos] = useState([]);
   
   useEffect(() => {
     if ((!carreraId || nivel === null || nivel === undefined)  ) return; // No hacemos nada si no hay un id
-    pedirHorariosCarreraNivel(carreraId, nivel)
+    pedirHorariosCarreraNivel(carreraId, nivel, escuelaId)
       .then((res) => {
         const eventosGenerados = generarEventosCalendar(res.data);
         //console.log("Datos devueltos por Supabase:", res.data);

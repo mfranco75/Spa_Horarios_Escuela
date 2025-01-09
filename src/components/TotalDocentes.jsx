@@ -2,17 +2,19 @@ import React, { useEffect, useState } from "react";
 import { Box, Typography } from "@mui/material";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Cell } from "recharts";
 import supabase from "../conexionDatabase";
+import { useUser } from "./UserContext";
 
 const TotalDocentes = () => {
   const [data, setData] = useState([]);
   const COLORS = ["#8884d8", "#82ca9d", "#ffc658", "#d0ed57", "#a4de6c", "#d8854d", "#83a6ed", "#8dd1e1"];
-
+  const { escuelaId } = useUser();
 
   const fetchTotalDocentes = async () => {
     try {
       const { data, error } = await supabase
         .from("horarios")
-        .select("carrera_id, profesor_id, carreras(nombre_carrera)");
+        .select("carrera_id, profesor_id, carreras(nombre_carrera)")
+        .eq("escuela_id", escuelaId);
 
       if (error) throw new Error(error.message);
 

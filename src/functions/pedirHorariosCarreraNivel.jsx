@@ -1,6 +1,7 @@
 import supabase from "../conexionDatabase";
 
-const pedirHorariosCarreraNivel = async (carreraId, nivel) => {
+const pedirHorariosCarreraNivel = async (carreraId, nivel, escuelaId) => {
+
   try {
     // Validación de parámetros
     if (!carreraId || nivel === null || nivel === undefined) {
@@ -16,7 +17,8 @@ const pedirHorariosCarreraNivel = async (carreraId, nivel) => {
         carreras (nombre_carrera)
       `)
       .eq("carrera_id", carreraId)
-      .eq("nivel", nivel);
+      .eq("nivel", nivel)
+      .eq("escuela_id", escuelaId);
 
     // Manejo de errores en la consulta
     if (error) {

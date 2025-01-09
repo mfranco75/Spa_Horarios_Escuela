@@ -1,7 +1,7 @@
 import supabase from "../conexionDatabase";
 
-
-const pedirHorariosCompleto = async () => {
+const pedirHorariosCompleto = async (escuelaId) => {  
+    
     try {
         // Consulta con Supabase usando joins
         const { data, error } = await supabase
@@ -11,6 +11,7 @@ const pedirHorariosCompleto = async () => {
                 profesores (apellido_nombre),
                 carreras (nombre_carrera)
             `)
+            .eq('escuela_id', escuelaId);
         
 
         // Manejo de errores en la consulta

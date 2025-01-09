@@ -10,7 +10,7 @@ const weekDays = getWeekDays();
 
 const generarEventosCalendar = (horarios) => {
   if (!Array.isArray(horarios) || horarios.length === 0) {
-    console.error("El array de horarios está vacío o no es válido.");
+    
     return [];
   }
 

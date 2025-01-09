@@ -1,7 +1,8 @@
 import supabase from "../conexionDatabase";
+import { useUser } from "../components/UserContext";
 
-
-const pedirHorarios = async (profesorId) => {
+const pedirHorarios = async (profesorId, escuelaId) => {
+    
     try {
         // Validación del ID del profesor
         if (!profesorId) {
@@ -18,7 +19,8 @@ const pedirHorarios = async (profesorId) => {
                 profesores (apellido_nombre),
                 carreras (nombre_carrera)
             `)
-            .eq('profesor_id', profesorId);
+            .eq('profesor_id', profesorId)
+            .eq('escuela_id', escuelaId);
 
         // Manejo de errores en la consulta
         if (error) {

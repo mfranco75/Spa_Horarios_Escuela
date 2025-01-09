@@ -44,6 +44,7 @@ function Home() {
             { title: 'Gestión de Horarios', description: 'Organiza horarios de clases de forma eficiente.' },
             { title: 'Administración de Docentes', description: 'Mantén actualizada la información de tu equipo docente.' },
             { title: 'Visualización de Calendarios', description: 'Accede a calendarios interactivos con filtros personalizados.' },
+            { title: 'Informes y Estadísticas', description: 'Visualiza gráficas de estadíticas y genera informes.' },
           ].map((feature, index) => (
             <Grid2 xs={12} md={4} key={index}>
               <Card>

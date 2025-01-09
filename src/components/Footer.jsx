@@ -23,7 +23,7 @@ const Footer = () => {
       }}
     >
       <Typography variant="h6" gutterBottom>
-        Tecnologías Utilizadas
+        Desarrollado en
       </Typography>
       <Grid2 container spacing={2} justifyContent="center">
         {technologies.map((tech, index) => (

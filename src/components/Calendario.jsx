@@ -12,12 +12,12 @@ import generarEventosCalendar from "./generarEventosCalendar";
 import "../styles/Calendario.css";
 
 
-const Calendario = ({ id }) => {
+const Calendario = ({ id , escuelaId }) => {
   const [eventos, setEventos] = useState([]);
 
   useEffect(() => {
     if (!id) return; // No hacemos nada si no hay un id
-    pedirHorarios(id)
+    pedirHorarios(id, escuelaId)
       .then((res) => {
         const eventosGenerados = generarEventosCalendar(res.data);
         //console.log("Datos devueltos por Supabase:", res.data);

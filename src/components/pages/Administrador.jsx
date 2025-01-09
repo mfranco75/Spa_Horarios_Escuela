@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import supabase from '../../conexionDatabase';
+import { useUser } from '../UserContext.jsx';
 import {
     Dialog,
     DialogActions,
@@ -23,6 +24,7 @@ const Administrador = () => {
     const [profesores, setProfesores] = useState([]);
     const [editingDocente, setEditingDocente] = useState(null);
     const [openEditModal, setOpenEditModal] = useState(false);
+    const { user, role, escuelaId } = useUser(); // Obtener el id de la escuela desde el contexto
 
     useEffect(() => {
         const fetchDocentes = async () => {
@@ -38,7 +40,8 @@ const Administrador = () => {
                     hora_fin,
                     profesores(id, apellido_nombre),
                     carreras(id, nombre_carrera)
-                `);
+                `)
+                .eq('escuela_id', escuelaId);
 
             if (error) {
                 console.error('Error fetching docentes:', error);
@@ -132,7 +135,9 @@ const Administrador = () => {
                 profesor_id: parseInt(editingDocente.profesor_id),
                 carrera_id: parseInt(editingDocente.carrera_id),
             })
-            .eq('id', editingDocente.id);
+            .eq('id', editingDocente.id)
+            .eq('escuela_id', escuelaId);
+
     
         if (error) {
             console.error('Error updating docente:', error);
@@ -153,7 +158,9 @@ const Administrador = () => {
                     hora_fin,
                     profesores(id, apellido_nombre),
                     carreras(id, nombre_carrera)
-                `);
+                `)
+                .eq('escuela_id', escuelaId);
+
     
             if (fetchError) {
                 console.error('Error fetching updated docentes:', fetchError);

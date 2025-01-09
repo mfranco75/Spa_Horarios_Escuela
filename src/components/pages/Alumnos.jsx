@@ -3,9 +3,10 @@ import { TextField, Box, Select, MenuItem, List, ListItem, ListItemButton, ListI
 import { useTheme } from "@mui/material/styles";
 import pedirCarreras from "../../functions/pedirCarreras";
 import CalendarComponentAlumnos from "../CalendarComponentAlumnos";
+import { useUser } from "../UserContext";
 
 function Alumnos() {
-  
+  const { escuelaId } = useUser(); // Obtén escuelaId del contexto
   const [carreras, setCarreras] = useState([]);
   const [filteredCarreras, setFilteredCarreras] = useState([]);
   const [selectedCarreraId, setSelectedCarreraId] = useState(null);
@@ -18,7 +19,7 @@ function Alumnos() {
   useEffect(() => {
     const fetchCarreras = async () => {
       try {
-        const carreras = await pedirCarreras();
+        const carreras = await pedirCarreras(escuelaId);
         setCarreras(carreras);
         setFilteredCarreras(carreras);
         console.log("Carreras:", carreras);
@@ -121,7 +122,7 @@ function Alumnos() {
             ))}
           </TextField>  
         </Box>
-          <CalendarComponentAlumnos carreraId={selectedCarreraId} nivel= {selectedNivel} />
+          <CalendarComponentAlumnos carreraId= {selectedCarreraId} nivel= {selectedNivel} escuelaId= {escuelaId}/>
         </Box>
     </Box>
   );

@@ -1,8 +1,12 @@
 import supabase from "../conexionDatabase";
 
-const pedirCarreras = async () => {
+
+const pedirCarreras = async (escuelaId) => {
+  
   try {
-    const { data, error } = await supabase.from("carreras").select("*");
+    const { data, error } = await supabase.from("carreras")
+    .select("*")
+    .eq("escuela_id", escuelaId);
 
     if (error) {
       throw new Error("Error al obtener los datos: " + error.message);

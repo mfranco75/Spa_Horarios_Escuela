@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useUser } from '../UserContext.jsx';
 import {
   Box,
   Button,
@@ -18,6 +19,7 @@ import supabase from "../../conexionDatabase";
 
 function Docentes() {
 
+  const { user, role, escuelaId } = useUser(); // Obtener el id de la escuela desde el contexto
   const [docentes, setDocentes] = useState([]);
   const [editingDocente, setEditingDocente] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -39,7 +41,8 @@ function Docentes() {
       const { data, error } = await supabase
         .from("profesores")
         .select("*")
-        .order("apellido_nombre", { ascending: true });
+        .order("apellido_nombre", { ascending: true })
+        .eq("escuela_id", escuelaId); // Filtrar por escuela_id
 
       if (error) {
         console.error("Error fetching docentes:", error);
@@ -65,7 +68,8 @@ function Docentes() {
     const { error } = await supabase
       .from("profesores")
       .update(editingDocente)
-      .eq("id", editingDocente.id);
+      .eq("id", editingDocente.id)
+      .eq("escuela_id", escuelaId); // Filtrar por escuela_id
 
     if (error) {
       console.error("Error updating docente:", error);
@@ -75,7 +79,9 @@ function Docentes() {
       const { data } = await supabase
         .from("profesores")
         .select("*")
-        .order("apellido_nombre", { ascending: true });
+        .order("apellido_nombre", { ascending: true })
+        .eq("escuela_id", escuelaId); // Filtrar por escuela_id
+
       setDocentes(data);
     }
   };
@@ -103,7 +109,8 @@ function Docentes() {
       const { data } = await supabase
         .from("profesores")
         .select("*")
-        .order("apellido_nombre", { ascending: true });
+        .order("apellido_nombre", { ascending: true })
+        .eq("escuela_id", escuelaId); // Filtrar por escuela_id
       setDocentes(data);
     }
   };
@@ -112,7 +119,8 @@ function Docentes() {
     const { error } = await supabase
       .from("profesores")
       .delete()
-      .eq("id", docenteToDelete.id);
+      .eq("id", docenteToDelete.id)
+      .eq("escuela_id", escuelaId); // Filtrar por escuela_id
 
     if (error) {
       console.error("Error deleting docente:", error);
@@ -122,7 +130,8 @@ function Docentes() {
       const { data } = await supabase
         .from("profesores")
         .select("*")
-        .order("apellido_nombre", { ascending: true });
+        .order("apellido_nombre", { ascending: true })
+        .eq("escuela_id", escuelaId); // Filtrar por escuela_id
       setDocentes(data);
     }
   };
