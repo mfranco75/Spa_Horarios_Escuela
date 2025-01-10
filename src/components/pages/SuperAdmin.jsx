@@ -11,16 +11,4 @@ const SuperAdmin = () => {
 
 export default SuperAdmin;
 
-/*
-estructura de la tabla ESCUELAS
 
-CREATE TABLE escuelas (
-  id SERIAL PRIMARY KEY,
-  nombre VARCHAR(255) NOT NULL,
-  direccion VARCHAR(255),
-  telefono VARCHAR(20),
-  cue VARCHAR(20),
-  clave_establecimiento VARCHAR (15),
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-*/

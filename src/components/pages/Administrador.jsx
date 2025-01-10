@@ -3,16 +3,25 @@ import React, { useState, useEffect } from 'react';
 import supabase from '../../conexionDatabase';
 import { useUser } from '../UserContext.jsx';
 import {
+    Box,
+    Button,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
+    TextField,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Paper,
+    Typography,
     Dialog,
     DialogActions,
     DialogContent,
-    DialogTitle,
-    Button,
-    TextField,
-    Select,
-    MenuItem,
-    FormControl,
-    InputLabel,
+    DialogTitle,  
   } from '@mui/material';
   
 
@@ -25,6 +34,10 @@ const Administrador = () => {
     const [editingDocente, setEditingDocente] = useState(null);
     const [openEditModal, setOpenEditModal] = useState(false);
     const { user, role, escuelaId } = useUser(); // Obtener el id de la escuela desde el contexto
+
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [horarioToDelete, sethorarioToDelete] = useState(null);
+    
 
     useEffect(() => {
         const fetchDocentes = async () => {
@@ -184,12 +197,236 @@ const Administrador = () => {
         }
     };
     
+    // DELETE HORARIO
+
+
 
     const getColorByNivel = (nivel) => {
         const colors = ['#FFCDD2', '#F8BBD0', '#E1BEE7', '#D1C4E9', '#C5CAE9'];
         return colors[nivel] || '#CFD8DC';
     };
 
+
+    return (
+        <Box sx={{ backgroundColor: '#F5F5F5', p: 3, minHeight: '100vh' }}>
+          <Box display="flex">
+            {/* Panel de filtros */}
+            <Box
+              sx={{
+                width: '25%',
+                p: 3,
+                backgroundColor: '#FFFFFF',
+                borderRadius: 2,
+                boxShadow: 3,
+              }}
+            >
+              <Typography variant="h6" gutterBottom>
+                Filtrar
+              </Typography>
+              <FormControl fullWidth margin="normal">
+                <InputLabel>Carrera</InputLabel>
+                <Select
+                  name="carrera"
+                  value={filters.carrera}
+                  onChange={handleFilterChange}
+                >
+                  <MenuItem value="">Todas</MenuItem>
+                  {carreras.map((carrera) => (
+                    <MenuItem key={carrera.id} value={carrera.nombre_carrera}>
+                      {carrera.nombre_carrera}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+    
+              <FormControl fullWidth margin="normal">
+                <InputLabel>Nivel</InputLabel>
+                <Select
+                  name="nivel"
+                  value={filters.nivel}
+                  onChange={handleFilterChange}
+                >
+                  <MenuItem value="">Todos</MenuItem>
+                  {[0, 1, 2, 3, 4].map((nivel) => (
+                    <MenuItem key={nivel} value={nivel}>
+                      {nivel}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+    
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Materia"
+                name="materia"
+                value={filters.materia}
+                onChange={handleFilterChange}
+                placeholder="Ej: Piano"
+              />
+    
+              <Button
+                variant="contained"
+                fullWidth
+                sx={{ mt: 2, backgroundColor: '#1976D2', color: '#FFFFFF' }}
+                onClick={handleApplyFilters}
+              >
+                Aplicar Filtros
+              </Button>
+            </Box>
+    
+            {/* Tabla de docentes */}
+            <Box sx={{ width: '70%', ml: 3 }}>
+              <TableContainer component={Paper} sx={{ borderRadius: 2, boxShadow: 3 }}>
+                <Table>
+                  <TableHead>
+                    <TableRow sx={{ backgroundColor: '#1976D2' }}>
+                      {['Docente', 'Carrera', 'Nivel', 'Materia', 'Comisión', 'Día', 'Hora de inicio', 'Hora de fin', 'Acciones'].map(
+                        (header) => (
+                          <TableCell key={header} sx={{ color: '#FFFFFF' }}>
+                            {header}
+                          </TableCell>
+                        )
+                      )}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {filteredDocentes.map((docente) => (
+                      <TableRow
+                        key={docente.id}
+                        sx={{ backgroundColor: getColorByNivel(docente.nivel) }}
+                      >
+                        <TableCell>{docente.profesores.apellido_nombre}</TableCell>
+                        <TableCell>{docente.carreras.nombre_carrera}</TableCell>
+                        <TableCell align="center">{docente.nivel}</TableCell>
+                        <TableCell>{docente.materia}</TableCell>
+                        <TableCell>{docente.comision}</TableCell>
+                        <TableCell>{docente.dia}</TableCell>
+                        <TableCell>{docente.hora_inicio}</TableCell>
+                        <TableCell>{docente.hora_fin}</TableCell>
+                        <TableCell>
+                          <Button
+                            variant="contained"
+                            size="small"
+                            sx={{ backgroundColor: '#1976D2', color: '#FFFFFF' }}
+                            onClick={() => handleEditClick(docente)}
+                          >
+                            Editar
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Box>
+          </Box>
+    
+          {/* Modal de edición */}
+          <Dialog open={openEditModal} onClose={() => setOpenEditModal(false)} fullWidth>
+            <DialogTitle>Editar Docente</DialogTitle>
+            <DialogContent>
+              <FormControl fullWidth margin="normal">
+                <InputLabel>Docente</InputLabel>
+                <Select
+                  name="profesor_id"
+                  value={editingDocente?.profesor_id || ''}
+                  onChange={handleEditChange}
+                >
+                  {profesores.map((profesor) => (
+                    <MenuItem key={profesor.id} value={profesor.id}>
+                      {profesor.apellido_nombre}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <FormControl fullWidth margin="normal">
+                <InputLabel>Carrera</InputLabel>
+                <Select
+                  name="carrera_id"
+                  value={editingDocente?.carrera_id || ''}
+                  onChange={handleEditChange}
+                >
+                  {carreras.map((carrera) => (
+                    <MenuItem key={carrera.id} value={carrera.id}>
+                      {carrera.nombre_carrera}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <FormControl fullWidth margin="normal">
+                <InputLabel>Nivel</InputLabel>
+                <Select
+                  name="nivel"
+                  value={editingDocente?.nivel || ''}
+                  onChange={handleEditChange}
+                >
+                  {[0, 1, 2, 3, 4].map((nivel) => (
+                    <MenuItem key={nivel} value={nivel}>
+                      {nivel}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Materia"
+                name="materia"
+                value={editingDocente?.materia || ''}
+                onChange={handleEditChange}
+              />
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Comisión"
+                name="comision"
+                value={editingDocente?.comision || ''}
+                onChange={handleEditChange}
+              />
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Día"
+                name="dia"
+                value={editingDocente?.dia || ''}
+                onChange={handleEditChange}
+              />
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Hora de inicio"
+                name="hora_inicio"
+                type="time"
+                value={editingDocente?.hora_inicio || ''}
+                onChange={handleEditChange}
+              />
+              <TextField
+                fullWidth
+                margin="normal"
+                label="Hora de fin"
+                name="hora_fin"
+                type="time"
+                value={editingDocente?.hora_fin || ''}
+                onChange={handleEditChange}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={() => setOpenEditModal(false)} color="secondary">
+                Cancelar
+              </Button>
+              <Button onClick={handleSaveChanges} color="primary">
+                Guardar
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </Box>
+      );
+    };
+    
+    export default Administrador;
+
+    /*
     return (
         <div style={{ backgroundColor: '#F5F5F5', padding: '20px', minHeight: '100vh' }}>
             <div className="docentes-container" style={{ display: 'flex' }}>
@@ -283,7 +520,8 @@ const Administrador = () => {
                     </table>
                 </div>
             </div>
-            {/* Modal de edición */}
+        
+          
             <Dialog open={openEditModal} onClose={() => setOpenEditModal(false)} fullWidth>
             <DialogTitle>Editar Docente</DialogTitle>
             <DialogContent>
@@ -379,8 +617,6 @@ const Administrador = () => {
                         }
                     }}
 
-
-
                 />
                 </DialogContent>
                 <DialogActions>
@@ -398,126 +634,4 @@ const Administrador = () => {
 };
 
 export default Administrador;
-
-
-/* 
-{editingDocente && (
-                <div className="edit-panel" style={{ marginTop: '20px', padding: '20px', backgroundColor: '#FFFFFF', borderRadius: '10px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-                <h3>Editar Docente</h3>
-                <label style={{ display: 'block', marginBottom: '10px' }}>
-                        Docente:
-                        <select
-                            name="profesores"
-                            value={editingDocente.profesor_id || ''} // Usamos el id del profesor
-                            onChange={(e) =>
-                                setEditingDocente((prev) => ({
-                                    ...prev,
-                                    profesor_id: parseInt(e.target.value), // Aseguramos que el valor sea un número
-                                }))
-                            }
-                            style={{ width: '100%', padding: '8px', borderRadius: '5px', marginTop: '5px' }}
-                        >
-                            <option value="">Seleccionar Docente</option>
-                            {profesores.map((profesor) => (
-                                <option key={profesor.id} value={profesor.id}>
-                                    {profesor.apellido_nombre}
-                                </option>
-                            ))}
-                        </select>
-                    </label>
-
-                    <label style={{ display: 'block', marginBottom: '10px' }}>
-                        Carrera:
-                        <select
-                            name="carreras"
-                            value={editingDocente.carrera_id || ''} // Usamos el id de la carrera
-                            onChange={(e) =>
-                                setEditingDocente((prev) => ({
-                                    ...prev,
-                                    carrera_id: parseInt(e.target.value), // Aseguramos que el valor sea un número
-                                }))
-                            }
-                            style={{ width: '100%', padding: '8px', borderRadius: '5px', marginTop: '5px' }}
-                        >
-                            <option value="">Seleccionar Carrera</option>
-                            {carreras.map((carrera) => (
-                                <option key={carrera.id} value={carrera.id}>
-                                    {carrera.nombre_carrera}
-                                </option>
-                            ))}
-                        </select>
-                    </label>
-                    <label style={{ display: 'block', marginBottom: '10px' }}>
-                        Nivel:
-                        <select
-                            name="nivel"
-                            value={editingDocente.nivel}
-                            onChange={handleEditChange}
-                            style={{ width: '100%', padding: '8px', borderRadius: '5px', marginTop: '5px' }}
-                        >
-                            <option value="">Seleccionar nivel</option>
-                            {[0, 1, 2, 3, 4].map((nivel) => (
-                                <option key={nivel} value={nivel}>{nivel}</option>
-                            ))}
-                        </select>
-                    </label>
-                    <label style={{ display: 'block', marginBottom: '10px' }}>
-                        Materia:
-                        <input
-                            type="text"
-                            name="materia"
-                            value={editingDocente.materia}
-                            onChange={handleEditChange}
-                            style={{ width: '100%', padding: '8px', borderRadius: '5px', marginTop: '5px' }}
-                        />
-                    </label>
-                    <label style={{ display: 'block', marginBottom: '10px' }}>
-                        Comisión:
-                        <input
-                            type="text"
-                            name="comision"
-                            value={editingDocente.comision}
-                            onChange={handleEditChange}
-                            style={{ width: '100%', padding: '8px', borderRadius: '5px', marginTop: '5px' }}
-                        />
-                    </label>
-                    <label style={{ display: 'block', marginBottom: '10px' }}>
-                        Dia:
-                        <input
-                            type="text"
-                            name="dia"
-                            value={editingDocente.dia}
-                            onChange={handleEditChange}
-                            style={{ width: '100%', padding: '8px', borderRadius: '5px', marginTop: '5px' }}
-                        />
-                    </label>
-                    <label style={{ display: 'block', marginBottom: '10px' }}>
-                        Hora de inicio:
-                        <input
-                            type="time"
-                            name="hora_inicio"
-                            value={editingDocente.hora_inicio}
-                            onChange={handleEditChange}
-                            style={{ width: '100%', padding: '8px', borderRadius: '5px', marginTop: '5px' }}
-                        />
-                    </label>
-                    <label style={{ display: 'block', marginBottom: '10px' }}>
-                        Hora de fin:
-                        <input
-                            type="time"
-                            name="hora_fin"
-                            value={editingDocente.hora_fin}
-                            onChange={handleEditChange}
-                            style={{ width: '100%', padding: '8px', borderRadius: '5px', marginTop: '5px' }}
-                        />
-                    </label>
-                    <button
-                        onClick={handleSaveChanges}
-                        style={{ width: '100%', padding: '10px', backgroundColor: '#1976D2', color: '#FFFFFF', border: 'none', borderRadius: '5px', cursor: 'pointer', marginTop: '10px' }}
-                    >
-                        Guardar Cambios
-                    </button>
-                </div>
-            )}
-        </div>
 */

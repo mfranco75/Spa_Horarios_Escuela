@@ -1,6 +1,7 @@
 html, body {
   height: 100%;
   width: 100%;
+  max-width: 100%;
   margin: 0;
   padding: 0; /* Asegura que no haya espacios adicionales */
   overflow-x: hidden; /* Evita scroll horizontal no deseado */

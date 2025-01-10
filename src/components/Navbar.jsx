@@ -66,6 +66,12 @@ const Navbar = () => {
             <Button color="inherit" component={Link} to="/horarios">
               Horarios
             </Button>
+            <Button color="inherit" component={Link} to="/alumnos">
+              Alumnos
+            </Button>
+            <Button color="inherit" component={Link} to="/informes">
+              Informes
+            </Button>
             {role === 'admin' && (
               <>
                 <Button color="inherit" component={Link} to="/docentes">
@@ -76,12 +82,7 @@ const Navbar = () => {
                 </Button>
               </>
             )}
-            <Button color="inherit" component={Link} to="/alumnos">
-              Alumnos
-            </Button>
-            <Button color="inherit" component={Link} to="/informes">
-              Informes
-            </Button>
+           
             <Button sx={{ color: 'secondary.main' }} onClick={handleLogout}>
               Cerrar sesión
             </Button>

@@ -23,6 +23,18 @@ import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
 
 const theme = createTheme({
+  components: {
+    MuiContainer: {
+      defaultProps: {
+        maxWidth: false, // Desactiva el límite de ancho
+      },
+      styleOverrides: {
+        root: {
+          padding: 0, // Opcional: elimina el padding
+        },
+      },
+    },
+  },
   palette: {
     primary: {
       main: '#3f51b5', // Cambia el color principal
