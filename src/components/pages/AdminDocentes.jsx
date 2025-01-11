@@ -14,10 +14,10 @@ import {
   Paper,
   TextField,
 } from "@mui/material";
-import supabase from "../../conexionDatabase";
+import supabase from "../../conexionDatabase.js";
 
 
-function Docentes() {
+function AdminDocentes() {
 
   const { user, role, escuelaId } = useUser(); // Obtener el id de la escuela desde el contexto
   const [docentes, setDocentes] = useState([]);
@@ -415,4 +415,4 @@ function Docentes() {
   );
 }
 
-export default Docentes;
+export default AdminDocentes;

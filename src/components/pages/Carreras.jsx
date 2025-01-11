@@ -5,7 +5,7 @@ import pedirCarreras from "../../functions/pedirCarreras";
 import CalendarComponentAlumnos from "../CalendarComponentAlumnos";
 import { useUser } from "../UserContext";
 
-function Alumnos() {
+function Carreras() {
   const { escuelaId } = useUser(); // Obtén escuelaId del contexto
   const [carreras, setCarreras] = useState([]);
   const [filteredCarreras, setFilteredCarreras] = useState([]);
@@ -105,7 +105,7 @@ function Alumnos() {
           }}
         >
         <Typography variant="h6" gutterBottom>
-        Seleccionar Nivel
+        Selecciona Carrera y Nivel para ver las materias
       </Typography>
           <TextField
             label="Nivel"
@@ -128,4 +128,4 @@ function Alumnos() {
   );
 }
 
-export default Alumnos;
+export default Carreras;

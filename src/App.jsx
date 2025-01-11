@@ -11,8 +11,7 @@ import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import Login from "./components/pages/Login.jsx";
 import Register from "./components/pages/Register.jsx";
 import Horarios from "./components/pages/Horarios.jsx";
-import Docentes from "./components/pages/Docentes.jsx";
-import Alumnos from "./components/pages/Alumnos.jsx";
+import Carreras from "./components/pages/Carreras.jsx";
 import Informes from "./components/pages/Informes.jsx";
 import Administrador from "./components/pages/Administrador.jsx";
 import CalendarComponent from "./components/CalendarComponent.jsx";
@@ -71,8 +70,7 @@ function MainApp({ user, setUser }) {
     await supabase.auth.signOut();
     setUser(null);
     navigate('/login');
-    console.log(user)
-  
+      
   };
 
   return (
@@ -96,18 +94,10 @@ function MainApp({ user, setUser }) {
             }
           />
           <Route
-            path="/docentes"
-            element={
-              <ProtectedRoute requiredRole="admin">
-                <Docentes />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/alumnos"
+            path="/carreras"
             element={
               <ProtectedRoute>
-                <Alumnos />
+                <Carreras />
               </ProtectedRoute>
             }
           />
@@ -170,3 +160,14 @@ function MainApp({ user, setUser }) {
 }
 
 export default App;
+
+/*
+<Route
+            path="/docentes"
+            element={
+              <ProtectedRoute requiredRole="admin">
+                <Docentes />
+              </ProtectedRoute>
+            }
+          />
+*/
