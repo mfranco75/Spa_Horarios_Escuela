@@ -64,6 +64,8 @@ const AdminUsuarios = () => {
                         <TableRow>
                             <TableCell>ID</TableCell>
                             <TableCell>Nombre</TableCell>
+                            <TableCell>Cant. de Niveles</TableCell>
+                            <TableCell>N° de Resolución</TableCell>
                             <TableCell>Acciones</TableCell>
                         </TableRow>
                     </TableHead>
@@ -72,6 +74,8 @@ const AdminUsuarios = () => {
                             <TableRow key={carrera.id}>
                                 <TableCell>{carrera.id}</TableCell>
                                 <TableCell>{carrera.nombre_carrera}</TableCell>
+                                <TableCell>{carrera.cantidad_de_niveles}</TableCell>
+                                <TableCell>{carrera.resolucion}</TableCell>
                                 <TableCell>
                                     <Button
                                         variant="contained"

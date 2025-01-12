@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, useMediaQuery } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import AdminDocentes from "./AdminDocentes.jsx"; 
 import AdminUsuarios from "./AdminUsuarios"; 
 import AdminCarreras from "./AdminCarreras";
@@ -8,6 +9,9 @@ import AdminHorarios from "./AdminHorarios";
 
 const Administrador = () => {
   const [activeSection, setActiveSection] = useState("Usuarios");
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  
 
   // Lista de secciones
   const sections = ["Usuarios", "Carreras", "Horarios", "Docentes"];
@@ -29,13 +33,13 @@ const Administrador = () => {
   };
 
   return (
-    <Box sx={{ display: "flex", height: "100vh" }}>
+    <Box sx={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: 2, p: 2 }}>
       {/* Barra lateral */}
       <Box
         sx={{
           width: "300px",
           height: "600px",
-          backgroundColor: "grey.400",
+          backgroundColor: "primary.main",
           color: "white",
           padding: "16px",
           display: "flex",
@@ -54,7 +58,7 @@ const Administrador = () => {
             variant="contained"
             sx={{
               backgroundColor: "primary.dark",
-              color: "grey.200",
+              color: "white",
               "&:hover": { backgroundColor: "primary.main" },
             }}
           >
@@ -65,13 +69,7 @@ const Administrador = () => {
 
       {/* Contenido principal */}
       <Box
-        sx={{
-          flex: 1,
-          padding: "16px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
+        
       >
         {renderSection()}
       </Box>

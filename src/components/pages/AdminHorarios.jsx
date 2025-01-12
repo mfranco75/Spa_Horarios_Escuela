@@ -213,7 +213,7 @@ const AdminHorarios = () => {
             {/* Panel de filtros */}
             <Box
               sx={{
-                width: '25%',
+                width: '220px',
                 p: 3,
                 backgroundColor: '#FFFFFF',
                 borderRadius: 2,
@@ -276,7 +276,7 @@ const AdminHorarios = () => {
             </Box>
     
             {/* Tabla de docentes */}
-            <Box sx={{ width: '70%', ml: 3 }}>
+            <Box sx={{ ml: 3 }}>
               <TableContainer component={Paper} sx={{ borderRadius: 2, boxShadow: 3 }}>
                 <Table>
                   <TableHead>
