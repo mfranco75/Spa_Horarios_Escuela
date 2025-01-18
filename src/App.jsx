@@ -15,7 +15,8 @@ import Carreras from "./components/pages/Carreras.jsx";
 import Informes from "./components/pages/Informes.jsx";
 import Administrador from "./components/pages/Administrador.jsx";
 import CalendarComponent from "./components/CalendarComponent.jsx";
-import Home from "./components/pages/Home.jsx"; // Asegúrate de tener este componente
+import Home from "./components/pages/Home.jsx";
+import AuthCallback from "./components/AuthCallback.jsx";
 
 import "./styles/App.css";
 import Navbar from "./components/Navbar.jsx";
@@ -82,6 +83,7 @@ function MainApp({ user, setUser }) {
       {/* Contenido principal */}
       <Container sx={{ marginTop: "20px" }}>
         <Routes>
+        <Route path="/auth/callback" element={<AuthCallback />} />
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

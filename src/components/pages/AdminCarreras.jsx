@@ -131,10 +131,11 @@ const AdminCarreras = () => {
           onChange={(e) =>
             setNewCarrera({ ...newCarrera, nombre_carrera: e.target.value })
           }
-          fullWidth
+          sx={{ width: 350 }} 
+          
         />
         <TextField
-                    label="Cantidad de Niveles"
+                    label="Cant. de Niveles"
                     value={newCarrera.cantidad_de_niveles}
                     onChange={(e) => {
                         const value = e.target.value;
@@ -142,7 +143,7 @@ const AdminCarreras = () => {
                             setNewCarrera({ ...newCarrera, cantidad_de_niveles: value });
                         }
                     }}
-                    helperText="Debe ser un número entre 1 y 7"
+                    sx={{ width: 150 }} 
                 />
         <TextField
           label="Número de Resolución"
