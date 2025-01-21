@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   Box,
   Button,
-  TextField,
   Typography,
   Table,
   TableBody,
@@ -14,63 +13,37 @@ import {
   Modal,
 } from "@mui/material";
 import supabase from "../../conexionDatabase"; // Conexión a Supabase
+import AdminInvite from "./AdminInvite"; // Importa el componente AdminInvite
+
 import { useUser } from "../UserContext.jsx";
 
 const AdminUsuarios = () => {
   const { escuelaId } = useUser();
   const [usuarios, setUsuarios] = useState([]);
-  const [newUsuario, setNewUsuario] = useState({
-    email: "",
-    apellido_nombre: "",
-    role: "user",
-  });
   const [modalOpen, setModalOpen] = useState(false);
+  const [inviteModalOpen, setInviteModalOpen] = useState(false); // Nuevo estado para AdminInvite
   const [selectedUsuario, setSelectedUsuario] = useState(null);
-  const [password, setPassword] = useState("");
 
   // Fetch de usuarios desde Supabase
   const fetchUsuarios = async () => {
-    const { data, error } = await supabase
-      .from("users")
-      .select("*")
-      .eq("escuela_id", escuelaId);
-
-    if (error) console.error(error);
-    else setUsuarios(data);
-  };
-
-  // Agregar un nuevo usuario
-  const handleAddUsuario = async () => {
-    if (!newUsuario.email || !newUsuario.apellido_nombre) {
-      alert("Por favor, completa todos los campos.");
-      return;
-    }
-  
     try {
-      const response = await fetch("/api/addUser", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: newUsuario.email,
-          apellido_nombre: newUsuario.apellido_nombre,
-          role: newUsuario.role,
-          escuela_id: escuelaId,
-        }),
-      });
-  
-      const data = await response.json();
-  
-      if (!response.ok) throw new Error(data.error);
-  
-      // Limpiar formulario y actualizar la lista de usuarios
-      setNewUsuario({ email: "", apellido_nombre: "", role: "user" });
-      fetchUsuarios();
+      const { data, error } = await supabase
+        .from("users")
+        .select("*")
+        .eq("escuela_id", escuelaId);
+
+      if (error) throw error;
+
+      setUsuarios(data);
     } catch (error) {
-      console.error("Error al agregar usuario:", error.message);
-      alert("Hubo un error al agregar el usuario: " + error.message);
+      console.error("Error al obtener usuarios:", error.message);
     }
   };
-  
+
+  // Cargar usuarios al montar el componente
+  useEffect(() => {
+    fetchUsuarios();
+  }, [escuelaId]);
 
   // Mostrar modal de confirmación antes de eliminar
   const handleOpenDeleteModal = (usuario) => {
@@ -81,14 +54,14 @@ const AdminUsuarios = () => {
   // Confirmar eliminación
   const reauthenticateAndDelete = async () => {
     try {
-      const { error: deleteError } = await supabase
-        .from("users")
-        .delete()
-        .eq("id", selectedUsuario.id)
-        .eq("escuela_id", escuelaId);
+      // Eliminar usuario de Supabase Auth
+      const { error: deleteError } = await supabase.auth.admin.deleteUser(
+        selectedUsuario.id
+      );
 
       if (deleteError) throw deleteError;
 
+      // Refrescar la lista de usuarios
       fetchUsuarios();
       setModalOpen(false);
       setSelectedUsuario(null);
@@ -97,32 +70,23 @@ const AdminUsuarios = () => {
     }
   };
 
-  useEffect(() => {
-    fetchUsuarios();
-  }, [escuelaId]);
-
   return (
     <Box>
       <Typography variant="h4" gutterBottom>
         Gestión de Usuarios
       </Typography>
-      <Box display="flex" gap={2} mb={3}>
-        <TextField
-          label="Email"
-          value={newUsuario.email}
-          onChange={(e) => setNewUsuario({ ...newUsuario, email: e.target.value })}
-          sx={{ width: 300 }}
-        />
-        <TextField
-          label="Apellido y Nombre"
-          value={newUsuario.apellido_nombre}
-          onChange={(e) => setNewUsuario({ ...newUsuario, apellido_nombre: e.target.value })}
-          sx={{ width: 300 }}
-        />
-        <Button variant="contained" color="primary" onClick={handleAddUsuario}>
-          Agregar
-        </Button>
-      </Box>
+      
+      {/* Botón para abrir el formulario de invitación */}
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => setInviteModalOpen(true)}
+        sx={{ mb: 3 }}
+      >
+        Invitar Nuevo Usuario
+      </Button>
+
+      {/* Tabla de usuarios */}
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -144,7 +108,7 @@ const AdminUsuarios = () => {
                 <TableCell>
                   <Button
                     variant="contained"
-                    color="secondary"
+                    color="error"
                     onClick={() => handleOpenDeleteModal(usuario)}
                   >
                     Eliminar
@@ -156,7 +120,34 @@ const AdminUsuarios = () => {
         </Table>
       </TableContainer>
 
-      {/* Modal de confirmación */}
+      {/* Modal de AdminInvite */}
+      <Modal
+        open={inviteModalOpen}
+        onClose={() => setInviteModalOpen(false)}
+        aria-labelledby="invite-modal-title"
+        aria-describedby="invite-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            bgcolor: "white",
+            boxShadow: 24,
+            p: 4,
+            borderRadius: 2,
+            width: 400,
+          }}
+        >
+          <AdminInvite
+            onClose={() => setInviteModalOpen(false)}
+            onUserAdded={fetchUsuarios} // Callback para refrescar la lista
+          />
+        </Box>
+      </Modal>
+
+      {/* Modal de confirmación de eliminación */}
       <Modal
         open={modalOpen}
         onClose={() => setModalOpen(false)}
