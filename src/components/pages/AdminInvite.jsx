@@ -1,13 +1,16 @@
 import { useState } from "react";
 import supabase from "../../conexionDatabase";
+import { useUser } from '../UserContext.jsx';
 import { Box, TextField, Button, Typography, CircularProgress, Alert, MenuItem } from "@mui/material";
 
-const AdminInvite = () => {
+const AdminInvite = ({ onClose, onUserAdded }) => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [role, setRole] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+
+  const { escuelaId } = useUser(); // Obtener el id de la escuela desde el contexto
 
   const handleInvite = async (e) => {
     e.preventDefault();
@@ -15,25 +18,33 @@ const AdminInvite = () => {
     setMessage("");
 
     try {
-      // Crear usuario en el sistema de autenticación de Supabase
-      const { data: inviteData, error: inviteError } = await supabase.auth.admin.inviteUserByEmail(email, {
-        redirectTo: "https://gestion-de-escuela.vercel.app/register", // URL donde el usuario completará su registro
-      });
-
-      if (inviteError) {
-        throw new Error(inviteError.message);
-      }
-
-      // Insertar datos preliminares en la tabla `users` con rol y email
-      const { error: insertError } = await supabase.from("users").insert([
-        { email, role, name, escuela_id: null }, // Escuela será asignada luego si corresponde
+      // Insertar datos en la tabla `invitados`
+      const { error: insertError } = await supabase.from("invitados").insert([
+        {
+          email,
+          apellido_nombre: name,
+          role,
+          escuela_id: escuelaId,
+        },
       ]);
 
       if (insertError) {
         throw new Error(insertError.message);
       }
 
-      setMessage(`¡Invitación enviada a ${email} con éxito!`);
+      setMessage(`¡Usuario ${name} (${email}) invitado con éxito!`);
+
+      // Llamar al callback para actualizar la tabla de invitados
+      if (onUserAdded) {
+        onUserAdded();
+      }
+
+      // Cerrar el modal automáticamente después de un breve delay
+      setTimeout(() => {
+        if (onClose) {
+          onClose();
+        }
+      }, 1000); // 1 segundo para que se muestre el mensaje de éxito
     } catch (error) {
       setMessage(`Error: ${error.message}`);
     } finally {
@@ -60,7 +71,7 @@ const AdminInvite = () => {
       </Typography>
       <form onSubmit={handleInvite} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
         <TextField
-          label="Nombre"
+          label="Apellido y Nombre"
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -84,8 +95,9 @@ const AdminInvite = () => {
           fullWidth
         >
           <MenuItem value="admin">Administrador</MenuItem>
-          <MenuItem value="teacher">Docente</MenuItem>
-          <MenuItem value="student">Estudiante</MenuItem>
+          <MenuItem value="user">Preceptor/ Equipo de Conducción</MenuItem>
+          <MenuItem value="docente">Docente</MenuItem>
+          <MenuItem value="estudiante">Estudiante</MenuItem>
         </TextField>
         <Button
           type="submit"
@@ -95,7 +107,7 @@ const AdminInvite = () => {
           disabled={loading}
           startIcon={loading && <CircularProgress size={20} />}
         >
-          {loading ? "Enviando..." : "Enviar Invitación"}
+          {loading ? "Guardando..." : "Guardar Usuario"}
         </Button>
       </form>
       {message && (

@@ -18,6 +18,7 @@ import demo4 from '../../assets/demoweb4.png';
 
 import { Link } from 'react-router-dom';
 import Footer from '../Footer';
+import '../..//styles/Home.css';
 
 function Home() {
   return (
@@ -30,8 +31,19 @@ function Home() {
           <Typography variant="h6" color="text.secondary" sx={{ mb: 3 }}>
             Gestiona horarios, docentes, carreras y más desde una plataforma intuitiva.
           </Typography>
-          <Button variant="contained" color="primary" size="large">
-            Explorar Funcionalidades
+          <Button 
+          variant="contained" color="primary" size="large"
+          sx={{
+
+            '&:hover': {
+              backgroundColor: 'secondary.main',
+              color: 'black',
+              boxShadow: 3,
+              transform: 'scale(1.05)',
+            },
+          }}
+          >
+            PROBAR EN MODO DEMO
           </Button>
         </Box>
 
@@ -131,3 +143,21 @@ function Home() {
 }
 
 export default Home;
+
+
+/*
+<Button 
+          variant="contained" color="primary" size="large"
+          sx={{
+            
+            '&:hover': {
+              backgroundColor: 'secondary.main',
+              color: 'black',
+              boxShadow: 3,
+              transform: 'scale(1.05)',
+            },
+          }}
+          >
+            PROBAR EN MODO DEMO
+          </Button>
+*/

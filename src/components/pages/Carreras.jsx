@@ -22,7 +22,7 @@ function Carreras() {
         const carreras = await pedirCarreras(escuelaId);
         setCarreras(carreras);
         setFilteredCarreras(carreras);
-        console.log("Carreras:", carreras);
+        
       } catch (error) {
         console.error("Error fetching carreras:", error);
       }

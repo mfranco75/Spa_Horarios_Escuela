@@ -20,12 +20,14 @@ import { useUser } from "../UserContext.jsx";
 const AdminUsuarios = () => {
   const { escuelaId } = useUser();
   const [usuarios, setUsuarios] = useState([]);
+  const [invitaciones, setInvitaciones] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
-  const [inviteModalOpen, setInviteModalOpen] = useState(false); // Nuevo estado para AdminInvite
+  const [inviteModalOpen, setInviteModalOpen] = useState(false);
   const [selectedUsuario, setSelectedUsuario] = useState(null);
 
-  // Fetch de usuarios desde Supabase
   const fetchUsuarios = async () => {
+    if (!escuelaId) return;
+
     try {
       const { data, error } = await supabase
         .from("users")
@@ -40,28 +42,43 @@ const AdminUsuarios = () => {
     }
   };
 
-  // Cargar usuarios al montar el componente
+  const fetchInvitaciones = async () => {
+    if (!escuelaId) return;
+
+    try {
+      const { data, error } = await supabase
+        .from("invitados")
+        .select("*")
+        .eq("escuela_id", escuelaId);
+
+      if (error) throw error;
+
+      setInvitaciones(data);
+    } catch (error) {
+      console.error("Error al obtener invitaciones:", error.message);
+    }
+  };
+
   useEffect(() => {
-    fetchUsuarios();
+    if (escuelaId) {
+      fetchUsuarios();
+      fetchInvitaciones();
+    }
   }, [escuelaId]);
 
-  // Mostrar modal de confirmación antes de eliminar
   const handleOpenDeleteModal = (usuario) => {
     setSelectedUsuario(usuario);
     setModalOpen(true);
   };
 
-  // Confirmar eliminación
   const reauthenticateAndDelete = async () => {
     try {
-      // Eliminar usuario de Supabase Auth
       const { error: deleteError } = await supabase.auth.admin.deleteUser(
         selectedUsuario.id
       );
 
       if (deleteError) throw deleteError;
 
-      // Refrescar la lista de usuarios
       fetchUsuarios();
       setModalOpen(false);
       setSelectedUsuario(null);
@@ -70,12 +87,33 @@ const AdminUsuarios = () => {
     }
   };
 
+  const handleDeleteInvitation = async (id) => {
+    try {
+      const { error } = await supabase.from("invitados").delete().eq("id", id);
+
+      if (error) throw error;
+
+      fetchInvitaciones();
+    } catch (error) {
+      console.error("Error al eliminar invitación:", error.message);
+    }
+  };
+
+  if (!escuelaId) {
+    return (
+      <Typography variant="h6" align="center">
+        Cargando información...
+      </Typography>
+    );
+  }
+
+
   return (
     <Box>
       <Typography variant="h4" gutterBottom>
         Gestión de Usuarios
       </Typography>
-      
+
       {/* Botón para abrir el formulario de invitación */}
       <Button
         variant="contained"
@@ -86,8 +124,11 @@ const AdminUsuarios = () => {
         Invitar Nuevo Usuario
       </Button>
 
-      {/* Tabla de usuarios */}
-      <TableContainer component={Paper}>
+      {/* Tabla de usuarios registrados */}
+      <Typography variant="h6" gutterBottom>
+        Usuarios Registrados
+      </Typography>
+      <TableContainer component={Paper} sx={{ mb: 4 }}>
         <Table>
           <TableHead>
             <TableRow>
@@ -120,6 +161,45 @@ const AdminUsuarios = () => {
         </Table>
       </TableContainer>
 
+      {/* Tabla de invitaciones pendientes */}
+      <Typography variant="h6" gutterBottom>
+        Invitaciones Pendientes
+      </Typography>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Email</TableCell>
+              <TableCell>Apellido y Nombre</TableCell>
+              <TableCell>Rol</TableCell>
+              <TableCell>Fecha de Creación</TableCell>
+              <TableCell>Acciones</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {invitaciones.map((invitacion) => (
+              <TableRow key={invitacion.id}>
+                <TableCell>{invitacion.email}</TableCell>
+                <TableCell>{invitacion.apellido_nombre}</TableCell>
+                <TableCell>{invitacion.role}</TableCell>
+                <TableCell>
+                  {new Date(invitacion.created_at).toLocaleDateString()}
+                </TableCell>
+                <TableCell>
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={() => handleDeleteInvitation(invitacion.id)}
+                  >
+                    Eliminar
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+
       {/* Modal de AdminInvite */}
       <Modal
         open={inviteModalOpen}
@@ -142,7 +222,7 @@ const AdminUsuarios = () => {
         >
           <AdminInvite
             onClose={() => setInviteModalOpen(false)}
-            onUserAdded={fetchUsuarios} // Callback para refrescar la lista
+            onUserAdded={fetchInvitaciones} // Refrescar invitaciones
           />
         </Box>
       </Modal>
@@ -196,3 +276,113 @@ const AdminUsuarios = () => {
 };
 
 export default AdminUsuarios;
+
+
+/*
+import React, { useEffect, useState } from "react";
+import {
+  Box,
+  Button,
+  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  TableContainer,
+  Paper,
+  Modal,
+} from "@mui/material";
+import supabase from "../../conexionDatabase"; // Conexión a Supabase
+import AdminInvite from "./AdminInvite"; // Importa el componente AdminInvite
+
+import { useUser } from "../UserContext.jsx";
+
+const AdminUsuarios = () => {
+  const { escuelaId } = useUser();
+  const [usuarios, setUsuarios] = useState([]);
+  const [invitaciones, setInvitaciones] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [inviteModalOpen, setInviteModalOpen] = useState(false);
+  const [selectedUsuario, setSelectedUsuario] = useState(null);
+
+  // Fetch de usuarios registrados desde la tabla `users`
+  const fetchUsuarios = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("users")
+        .select("*")
+        .eq("escuela_id", escuelaId);
+
+      if (error) throw error;
+
+      setUsuarios(data);
+    } catch (error) {
+      console.error("Error al obtener usuarios:", error.message);
+    }
+  };
+
+  // Fetch de invitaciones pendientes desde la tabla `invitados`
+  const fetchInvitaciones = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("invitados")
+        .select("*")
+        .eq("escuela_id", escuelaId);
+
+      if (error) throw error;
+
+      setInvitaciones(data);
+    } catch (error) {
+      console.error("Error al obtener invitaciones:", error.message);
+    }
+  };
+
+  // Cargar datos al montar el componente
+  useEffect(() => {
+    fetchUsuarios();
+    fetchInvitaciones();
+  }, [escuelaId]);
+
+  // Mostrar modal de confirmación antes de eliminar un usuario
+  const handleOpenDeleteModal = (usuario) => {
+    setSelectedUsuario(usuario);
+    setModalOpen(true);
+  };
+
+  // Confirmar eliminación de usuario registrado
+  const reauthenticateAndDelete = async () => {
+    try {
+      // Eliminar usuario de Supabase Auth
+      const { error: deleteError } = await supabase.auth.admin.deleteUser(
+        selectedUsuario.id
+      );
+
+      if (deleteError) throw deleteError;
+
+      // Refrescar la lista de usuarios
+      fetchUsuarios();
+      setModalOpen(false);
+      setSelectedUsuario(null);
+    } catch (error) {
+      console.error("Error al eliminar el usuario:", error.message);
+    }
+  };
+
+  // Eliminar invitación
+  const handleDeleteInvitation = async (id) => {
+    try {
+      const { error } = await supabase
+        .from("invitados")
+        .delete()
+        .eq("id", id);
+
+      if (error) throw error;
+
+      // Refrescar la lista de invitaciones
+      fetchInvitaciones();
+    } catch (error) {
+      console.error("Error al eliminar invitación:", error.message);
+    }
+  };
+*/

@@ -3,10 +3,9 @@ import { Box, Typography } from "@mui/material";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
 const AulasPorHorario = () => {
+  
+  
   const data = [
-    { periodo: "16:40-18:40", materias: 5 },
-    { periodo: "18:40-20:40", materias: 8 },
-    { periodo: "20:40-22:40", materias: 3 },
   ];
   const COLORS = ["#8884d8", "#82ca9d", "#ffc658"];
 
