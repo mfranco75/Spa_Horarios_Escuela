@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Para redirigir
+import { useUser } from "../UserContext.jsx"; // Contexto global
 import supabase from "../../conexionDatabase";
-
 import { Box, TextField, Button, Typography, CircularProgress, Alert } from "@mui/material";
 
 const Register = () => {
@@ -8,6 +9,8 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+  const { setUser } = useUser(); // Obtener el setter del contexto
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -15,10 +18,10 @@ const Register = () => {
     setMessage("");
 
     try {
-      // Verificar si el email existe en la tabla `invitados`
+      // Verificar si el email está en la tabla `invitados`
       const { data: invitadosData, error: invitadosError } = await supabase
         .from("invitados")
-        .select("*")
+        .select("apellido_nombre, role, escuela_id")
         .eq("email", email)
         .single();
 
@@ -26,7 +29,7 @@ const Register = () => {
         throw new Error("El correo no está invitado o no se encontró.");
       }
 
-      // Crear usuario en el sistema de autenticación de Supabase
+      // Crear usuario en Supabase Auth
       const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email,
         password,
@@ -37,9 +40,10 @@ const Register = () => {
       }
 
       // Obtener el ID del usuario registrado
-      const userId = signUpData.user.id;
+      const userId = signUpData.user?.id;
+      if (!userId) throw new Error("No se pudo obtener el ID del usuario.");
 
-      // Insertar usuario en la tabla `users` con los datos de `invitados`
+      // Insertar en la tabla `users`
       const { apellido_nombre, role, escuela_id } = invitadosData;
 
       const { error: insertError } = await supabase.from("users").insert([
@@ -53,20 +57,26 @@ const Register = () => {
       ]);
 
       if (insertError) {
+        await supabase.auth.admin.deleteUser(userId);
         throw new Error(insertError.message);
       }
 
-      // Eliminar el registro de la tabla `invitados`
+      // Eliminar de `invitados`
       const { error: deleteError } = await supabase
         .from("invitados")
         .delete()
         .eq("email", email);
 
       if (deleteError) {
-        throw new Error(deleteError.message);
+          console.log("Error eliminando invitado:", deleteError.message);
       }
 
-      setMessage("¡Usuario registrado exitosamente!");
+      // Actualizar el contexto global del usuario
+      setUser({ id: userId, email, role, escuela_id });
+
+      // Redirigir a /horarios
+      navigate("/horarios");
+
     } catch (error) {
       setMessage(`Error: ${error.message}`);
     } finally {
@@ -119,9 +129,7 @@ const Register = () => {
           {loading ? "Registrando..." : "Registrarse"}
         </Button>
       </form>
-      {message && (
-        <Alert severity={message.startsWith("Error") ? "error" : "success"}>{message}</Alert>
-      )}
+      {message && <Alert severity={message.startsWith("Error") ? "error" : "success"}>{message}</Alert>}
     </Box>
   );
 };

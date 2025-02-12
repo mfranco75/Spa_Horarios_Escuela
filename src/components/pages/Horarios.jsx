@@ -13,10 +13,14 @@ function Horarios({ CalendarComponent }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
+
+
   useEffect(() => {
+    
     const fetchDocentes = async () => {
       try {
         const docentes = await pedirDocentes(escuelaId); // Pasa escuelaId como argumento
+        
         const sortedDocentes = docentes.sort((a, b) =>
           a.apellido_nombre.localeCompare(b.apellido_nombre)
         );
@@ -26,6 +30,7 @@ function Horarios({ CalendarComponent }) {
         console.error("Error fetching docentes:", error);
       }
     };
+    
 
     if (escuelaId) {
       fetchDocentes();

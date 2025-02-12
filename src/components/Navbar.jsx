@@ -24,6 +24,7 @@ const Navbar = () => {
           console.error('Error al obtener el nombre de la escuela:', error.message);
         } else if (data) {
           setNombreEscuela(data.nombre);
+          console.log('Nombre de la escuela:', data);
         }
       }
     };

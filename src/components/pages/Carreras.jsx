@@ -10,7 +10,7 @@ function Carreras() {
   const [carreras, setCarreras] = useState([]);
   const [filteredCarreras, setFilteredCarreras] = useState([]);
   const [selectedCarreraId, setSelectedCarreraId] = useState(null);
-  const [selectedNivel, setSelectedNivel] = useState(null);
+  const [selectedNivel, setSelectedNivel] = useState(1);
   
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -35,7 +35,7 @@ function Carreras() {
     setSelectedCarreraId(id);
   };
 
-  const niveles = [0, 1, 2, 3, 4];
+  const niveles = [0, 1, 2, 3, 4, 5];
   const handleNivelChange = (event) => {
     setSelectedNivel(event.target.value);
   };

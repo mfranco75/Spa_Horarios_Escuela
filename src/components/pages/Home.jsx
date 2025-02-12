@@ -16,11 +16,25 @@ import demo2 from '../../assets/demoweb2.png';
 import demo3 from '../../assets/demoweb3.png';
 import demo4 from '../../assets/demoweb4.png';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useUser } from '../UserContext';
 import Footer from '../Footer';
+
 import '../..//styles/Home.css';
 
+
 function Home() {
+
+  const { loginAsDemo } = useUser(); // Accede a la función loginAsDemo
+  const navigate = useNavigate(); // Hook para redirección
+  
+
+  const handleDemoLogin = () => {
+    loginAsDemo(); // Inicia sesión como demo
+    navigate('/horarios'); // Redirige a la página inicial del modo demo
+  };
+
+
   return (
     <Container sx={{ width: "100%" , padding : 4 }}>
         {/* Hero Section */}
@@ -32,7 +46,11 @@ function Home() {
             Gestiona horarios, docentes, carreras y más desde una plataforma intuitiva.
           </Typography>
           <Button 
-          variant="contained" color="primary" size="large"
+          variant="contained" 
+          color="primary" 
+          size="large"
+          onClick={handleDemoLogin} // Llama a la función al hacer clic
+
           sx={{
 
             '&:hover': {

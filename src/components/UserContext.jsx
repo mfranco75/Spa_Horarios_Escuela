@@ -67,8 +67,20 @@ export const UserProvider = ({ children }) => {
     };
   }, []);
 
+  // Nuevo: Función para iniciar sesión como usuario demo
+  const loginAsDemo = () => {
+    setUser({
+      id: 'demo', // ID ficticio para el usuario demo
+      email: 'demo@demo.com', // Email ficticio para modo demo
+    });
+    setRole('demo'); // Rol asignado al usuario demo
+    setEscuelaId(0); // ID de la escuela demo
+  };
+
+
+
   return (
-    <UserContext.Provider value={{ user, role, escuelaId, setUser, setRole, setEscuelaId }}>
+    <UserContext.Provider value={{ user, role, escuelaId, setUser, setRole, setEscuelaId, loginAsDemo }}>
       {children}
     </UserContext.Provider>
   );
