@@ -5,7 +5,7 @@ import pedirDocentes from "../../functions/pedirDocentes";
 import { useUser } from "../UserContext"; // Asegúrate de importar el contexto
 
 function Horarios({ CalendarComponent }) {
-  const { escuelaId } = useUser(); // Obtén escuelaId del contexto
+  const { user, role, escuelaId } = useUser(); // Obtén escuelaId del contexto
   const [docentes, setDocentes] = useState([]);
   const [filteredDocentes, setFilteredDocentes] = useState([]);
   const [selectedDocenteId, setSelectedDocenteId] = useState(null);
@@ -13,7 +13,8 @@ function Horarios({ CalendarComponent }) {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
-
+  
+  
 
   useEffect(() => {
     
@@ -28,13 +29,14 @@ function Horarios({ CalendarComponent }) {
         setFilteredDocentes(sortedDocentes);
       } catch (error) {
         console.error("Error fetching docentes:", error);
+        
       }
     };
     
 
-    if (escuelaId) {
+    
       fetchDocentes();
-    }
+   
   }, [escuelaId]); // Vuelve a ejecutar si cambia escuelaId
 
   const handleDocenteClick = (id) => {

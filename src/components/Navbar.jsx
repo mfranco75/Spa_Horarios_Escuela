@@ -13,7 +13,7 @@ const Navbar = () => {
   // Obtener el nombre de la escuela
   useEffect(() => {
     const fetchNombreEscuela = async () => {
-      if (escuelaId) {
+      if (escuelaId !== null) {
         const { data, error } = await supabase
           .from('escuelas')
           .select('nombre')
@@ -24,7 +24,7 @@ const Navbar = () => {
           console.error('Error al obtener el nombre de la escuela:', error.message);
         } else if (data) {
           setNombreEscuela(data.nombre);
-          console.log('Nombre de la escuela:', data);
+          
         }
       }
     };
@@ -36,7 +36,7 @@ const Navbar = () => {
     await supabase.auth.signOut();
     setUser(null);
     setNombreEscuela('');
-    navigate('/login');
+    navigate('/');
   };
 
   return (

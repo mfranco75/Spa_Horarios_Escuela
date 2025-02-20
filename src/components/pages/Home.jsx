@@ -94,7 +94,7 @@ function Home() {
 
        {/* Galería Section */}
         <Typography variant="h4" gutterBottom sx={{ mt: 6 }}>
-          Galería
+          Galería de imágenes
         </Typography>
         <Grid2 
           container 

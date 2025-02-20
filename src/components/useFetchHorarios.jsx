@@ -24,7 +24,7 @@ const useFetchHorarios = (escuelaId) => {
       }
     };
 
-    if (escuelaId) fetchHorarios();
+    if (escuelaId !== null) fetchHorarios();
   }, [escuelaId]);
 
   return { horarios, loading, error };
