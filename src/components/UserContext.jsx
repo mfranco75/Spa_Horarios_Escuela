@@ -74,7 +74,7 @@ export const UserProvider = ({ children }) => {
       email: 'demo@demo.com', // Email ficticio para modo demo
     });
     setRole('demo'); // Rol asignado al usuario demo
-    setEscuelaId(0); // ID de la escuela demo
+    setEscuelaId(0); // ID de la escuela demo  (0 = Sin escuela)
   };
 
 

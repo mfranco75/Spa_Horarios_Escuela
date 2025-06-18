@@ -71,6 +71,7 @@ const Calendario = ({ id , escuelaId }) => {
               Carrera: ${info.event.extendedProps.carrera}<br>
               Nivel: ${info.event.extendedProps.nivel}<br>
               Comisión: ${info.event.extendedProps.comision}<br>
+              Aula: ${info.event.extendedProps.aula}<br>
               Dia de la semana: ${info.event.extendedProps.dia}
             `,
             allowHTML: true,

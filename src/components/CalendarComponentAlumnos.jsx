@@ -76,6 +76,7 @@ function CalendarComponentAlumnos({ carreraId, nivel, escuelaId }) {
               Carrera: ${info.event.extendedProps.carrera}<br>
               Nivel: ${info.event.extendedProps.nivel}<br>
               Comisión: ${info.event.extendedProps.comision}<br>
+              Aula: ${info.event.extendedProps.aula}<br>
               Dia de la semana: ${info.event.extendedProps.dia} :  ${info.event.start.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit',hourCycle:'h23' })} - 
               ${info.event.end.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit',hourCycle:'h23' })}
             `,

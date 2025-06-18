@@ -55,7 +55,8 @@ const generarEventosCalendar = (horarios) => {
         carrera: horario.carreras.nombre_carrera,
         nivel: horario.nivel,
         comision: horario.comision,
-        dia: horario.dia
+        dia: horario.dia,
+        aula: horario.aula
 
       },
     };

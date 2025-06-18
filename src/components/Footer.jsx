@@ -1,24 +1,23 @@
 import React from "react";
-import { Box, Grid2, Typography } from "@mui/material";
-import reactLogo from "../assets/React_logo.png"; // Ruta al logo de React
-import supabaseLogo from "../assets/supabase-logo-icon.png"; // Ruta al logo de Supabase
-import muiLogo from "../assets/material-ui-48.png"; // Ruta al logo de MUI
-
+import { Box, Grid2, Typography, Link } from "@mui/material";
+import reactLogo from "../assets/React_logo.png";
+import supabaseLogo from "../assets/supabase-logo-icon.png";
+import muiLogo from "../assets/material-ui-48.png";
+import linkedinLogo from "../assets/linkedin-logo.png"; // Agregá tu logo
 
 const Footer = () => {
   const technologies = [
     { name: "React", logo: reactLogo },
     { name: "Supabase", logo: supabaseLogo },
     { name: "MUI", logo: muiLogo },
-    
   ];
 
   return (
     <Box
       sx={{
-        backgroundColor: "#f5f5f5", // Color de fondo del footer
+        backgroundColor: "#f5f5f5",
         padding: 4,
-        mt: 6, // Espaciado superior
+        mt: 6,
         textAlign: "center",
       }}
     >
@@ -43,7 +42,7 @@ const Footer = () => {
                 sx={{
                   width: 50,
                   height: 50,
-                  mb: 1, // Margen inferior para separar texto y logo
+                  mb: 1,
                 }}
               />
               <Typography variant="body1">{tech.name}</Typography>
@@ -51,7 +50,35 @@ const Footer = () => {
           </Grid2>
         ))}
       </Grid2>
-      
+
+      {/* LinkedIn Section */}
+      <Box
+        sx={{
+          mt: 4,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: 1,
+        }}
+      >
+        <Link
+          href="https://www.linkedin.com/in/mariano-franco-1975-mdq/"
+          target="_blank"
+          rel="noopener noreferrer"
+          underline="none"
+          sx={{ display: "flex", alignItems: "center" }}
+        >
+          <Box
+            component="img"
+            src={linkedinLogo}
+            alt="LinkedIn"
+            sx={{ width: 30, height: 30, mr: 1 }}
+          />
+          <Typography variant="body2" color="textSecondary">
+            Mariano Franco en LinkedIn
+          </Typography>
+        </Link>
+      </Box>
     </Box>
   );
 };
