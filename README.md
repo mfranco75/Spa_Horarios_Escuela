@@ -45,3 +45,6 @@ Visita la demostración desplegada aquí:
    ```bash
    git clone https://github.com/tu-usuario/gestion-de-escuela.git
    cd gestion-de-escuela
+
+2. Descarga el contenedor
+   https://hub.docker.com/repository/docker/marianofranco/gestion-de-escuela/general
