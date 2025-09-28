@@ -57,7 +57,7 @@ const CargarDatosDemo = () => {
               carrera_id: carrera.id,
               materia: `MATERIA ${hora / 2}`,
               comision: `COMISION ${carreraIndex + 1}`,
-              nivel: (hora / 2) % carrera.cantidad_de_niveles + 1,
+              nivel: Math.floor(hora / 2) % carrera.cantidad_de_niveles + 1,
               aula: `AULA ${hora}`,
               escuela_id: escuelaIdDemo,
             });
